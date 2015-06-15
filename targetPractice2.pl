@@ -33,8 +33,28 @@ our %configuration = load_configuration($ARGV[0]);
 #Similarly, innercork will be labelled as 1.2 in the diagram. 
 #-------------------------------------------------------------------- 
 
-#General Remarks ---------------------------
+#General Remarks ----------------------------------------------------------------------------------
 # All the windows are made of Aluminium, with a thicknes of 15 micro-inch
+#Setting visibility as zero just makes the geometry as the word implies, invisible. But it still exists and will interact with any particle that passes through its region 
+
+#For Reference, here are the Geant4 shape names and their GEMC equivalents that were used in building this target 
+
+
+# Geant4 Name				GEMC Name			Object
+
+# G4Sphere				Sphere				Sphere
+# G4Tubs				Tube				Cylinder
+# G4Cons				Cons				Cone
+
+
+# I have attached a GEMC dictionary file which also contains other shape names and their eqiuivalents
+
+# Some of the materials used to build these shapes were actually not avaiable in the Geant4 materials database, but were rather mentioned in the source code for GEMC and so they were found
+#by GREP-ing the source code for the material that was needed, in the file materials.cc in installation directory of GEMC
+ 
+#All the colors are 6 digit hexadecimal numbers, which makes sense since, 2 hexadecimal numbers are 8 bits and so thats a range between 0 and 255. So, the scheme is RRGGBB. 
+#One more number can be added to the end of this 6 digit number and this defines the opacity of the color, with 0 being the most opaque and 6 being the least opaque 
+
 
 sub build_totalFrame 
 {
@@ -44,7 +64,7 @@ sub build_totalFrame
 	$detector{"description"} = "In order to move the picture";
 	$detector{"pos"}         = "0*mm 0*mm 0*mm";
  	$detector{"rotation"}    = "0*deg 0*deg 0*deg";
-	$detector{"color"}       = "C875333";
+	$detector{"color"}       = "C875337";
 	$detector{"type"}        = "Box";
 	$detector{"dimensions"}  = "400*mm 400*mm 400*mm";
 	$detector{"material"}    = "vacuum_m9";
@@ -121,7 +141,7 @@ sub build_corkWindow #1.3
  	$detector{"rotation"}    = "0*deg 0*deg 0*deg";
 	$detector{"color"}       = "FF00003";
 	$detector{"type"}        = "Tube";
-	$detector{"dimensions"}  = "0*mm 1.8135*mm 0.000015*in 270*deg 360*deg";
+	$detector{"dimensions"}  = "0*mm 1.8135*mm 0.000381*mm 270*deg 360*deg";
 	$detector{"material"}    = "G4_Al";
 	$detector{"visible"}     = 1;
 	$detector{"style"}       = 1;
@@ -191,7 +211,7 @@ sub build_kaptonConeWindow #2.3
 	$detector{"rotation"}    = "0*deg 0*deg 0*deg";
 	$detector{"color"}       = "FF00003";
 	$detector{"type"}        = "Tube";
-	$detector{"dimensions"}  = "0.0001*mm 1.9982*mm 0.000015*in 270*deg 360*deg";
+	$detector{"dimensions"}  = "0.0001*mm 1.9982*mm 0.000381*mm 270*deg 360*deg";
 	$detector{"material"}    = "G4_Al";
 	$detector{"visible"}     = 1;
 	$detector{"style"}       = 1;
@@ -285,7 +305,7 @@ sub build_LD2CapTopCover #5.3
 	$detector{"rotation"}    = "0*deg 0*deg 0*deg";
 	$detector{"color"}       = "FF00003";
 	$detector{"type"}        = "Tube";
-	$detector{"dimensions"}  = "0.0001*mm 2*mm 0.000015*in  270*deg 360*deg";
+	$detector{"dimensions"}  = "0.0001*mm 2*mm 0.000381*mm 270*deg 360*deg";
 	$detector{"material"}    = "G4_Al";
 	$detector{"visible"}     = 1;
 	$detector{"style"}       = 1;
@@ -406,7 +426,7 @@ sub build_centralPipelineWindow #6.2
  	$detector{"rotation"}    = "0*deg 0*deg 0*deg";
 	$detector{"color"}       = "FF0000";
 	$detector{"type"}        = "Tube";
-	$detector{"dimensions"}  = "0.00001*mm 2*mm 0.000015*in 270*deg 360*deg";
+	$detector{"dimensions"}  = "0.00001*mm 2*mm 0.000381*mm  270*deg 360*deg";
 	$detector{"material"}    = "G4_Al";
 	$detector{"visible"}     = 1;
 	$detector{"style"}       = 1;
@@ -540,6 +560,9 @@ sub build_tThirdOuterPipe #9.4
 #--------------------------------------------------------------------------------------------------------------------------------
 
 #The following pipes will be providing liquid hydrogen and duterium to the storage tanks mentioned above
+#Their relative positioning is identical to that of the foam mentioned above, i.e. each set of pipes is separated by 111 degrees. One set of pipes include, airCylinderVerticalTop1, pipetoLD2Top1, 
+#airCylinderVerticalBottom1, pipetoLD2Bottom1
+#There are 3 such sets of piping just like there were three sets of foam layers
 
 
 #This is the first vertical pipe that lies in a vertical plane and is connected to an outside supply of liquid duterium
@@ -561,6 +584,7 @@ sub build_airCylinderVerticalTop1
 }
 
 
+#This pipe connects the first vertical pipe to the kapton layer 
 sub build_pipeToLD2Top1
 {
 	my %detector = init_det();
@@ -578,6 +602,7 @@ sub build_pipeToLD2Top1
 	print_det(\%configuration, \%detector);
 }
 
+#This is a copy of the first vertical pipe but is slightly smaller and is situation slightly below the first vertical pipe 
 sub build_airCylinderVerticalBottom1
 {
 	my %detector = init_det();
@@ -595,6 +620,7 @@ sub build_airCylinderVerticalBottom1
 	print_det(\%configuration, \%detector);
 }
 
+#This pipe connects the pipe above to the liquid duterium cone
 sub build_pipeToLD2Bottom1
 {
 	my %detector = init_det();
@@ -776,6 +802,9 @@ sub build_pipeToLD2Bottom3
 	print_det(\%configuration, \%detector);
 }
 
+
+
+#This is the largest cylinder that encloses everything 
 sub build_finalTube
 {
 	my %detector = init_det();
@@ -794,8 +823,10 @@ sub build_finalTube
 }
 
 
+#This is the cap of the largest cylinder and is made of multiple shapes as will be shown below
 sub build_topCap
 {
+        #We make a cone that we will subtract from the volume to get a cone like crater 
 	my %detector = init_det();
 	$detector{"name"}        = "emptyCone";
 	$detector{"mother"}      = "shell";
@@ -811,6 +842,7 @@ sub build_topCap
 	print_det(\%configuration, \%detector);
 
 
+	#We make a cylindrical volume which acts like a nozel to the cap 
 	%detector = init_det();
 	$detector{"name"}        = "outsideProngs";
 	$detector{"mother"}      = "shell";
@@ -825,7 +857,7 @@ sub build_topCap
 	$detector{"style"}       = 1;
 	print_det(\%configuration, \%detector);
 
-
+	#We make a hemisphere that is the bulk of the cap 
 	%detector = init_det();
 	$detector{"name"}        = "shell";
 	$detector{"mother"}      = "finalTube";
@@ -841,7 +873,7 @@ sub build_topCap
 	print_det(\%configuration, \%detector);
 
 
-	
+	#We add the cylinder to the top of the sphere to make a hemisphere with a tube like extension
 	%detector = init_det();
 	$detector{"name"}        = "shellWithProngs";
 	$detector{"mother"}      = "finalTube";
@@ -856,7 +888,7 @@ sub build_topCap
 	$detector{"style"}       = 1;
 	print_det(\%configuration, \%detector);
 
-	
+	#We remove the cone from the cylinder and part of the sphere to make a cone like crater in the center of the tube extension, to make a window 
 	%detector = init_det();
 	$detector{"name"}        = "shellWithCraterAndProngs";
 	$detector{"mother"}      = "biggestFrame";
@@ -876,12 +908,31 @@ sub build_topCap
 
 }
 
+#This is the window of front of the final tube i.e. the window to cover the top of the crater made by removing a cone from the cylinder above ( please see above) 
+sub build_finalTubeWindow
+{
+	my %detector = init_det();
+	$detector{"name"}        = "finalTubeWindow";
+	$detector{"mother"}      = "root";
+	$detector{"description"} = "The window of the final tube";
+	$detector{"pos"}         = "0*mm 0*mm 94.96835*mm";
+ 	$detector{"rotation"}    = "0*deg 0*deg 0*deg";
+	$detector{"color"}       = "FF00003";
+	$detector{"type"}        = "Tube";
+	$detector{"dimensions"}  = "0*mm 9.52455*mm 0.000381*mm  270*deg 360*deg";
+	$detector{"material"}    = "G4_KAPTON";
+	$detector{"visible"}     = 1;
+	$detector{"style"}       = 1;
+	print_det(\%configuration, \%detector);
+}
+
+#This is the back extension of the tube and has been added beause there is another material that extends behind this large tube
 sub build_finalTubeExtension
 {
 	my %detector = init_det();
 	$detector{"name"}        = "finalTubeExtension";
 	$detector{"mother"}      = "finalTube";
-	$detector{"description"} = "The cover of the final tube";
+	$detector{"description"} = "The extension behind the final tube";
 	$detector{"pos"}         = "0*mm 0*mm -104.09025*mm";
  	$detector{"rotation"}    = "0*deg 0*deg 0*deg";
 	$detector{"color"}       = "FFCCFF3";
@@ -893,7 +944,12 @@ sub build_finalTubeExtension
 	print_det(\%configuration, \%detector);
 }
 
+#There are 3 sets of piping for the 3 sets of plumbing mentioned above (i.e. where the separation between the parts was 111 degree ) 
+#Each set of piping has two vertical tubes that are supposed to bring liquid duteirum from the outside, and therefore each set needs piping to do so. These are therefore horizontal pipes that 
+#extend from the vertical pipes named airCylinderVerticalTop and Bottom, and provide the necessary plumbing
+#This also means that these three sets of pipes are also separated by 111 degrees 
 
+#This pipe extends from airCylinderVerticalTop1 horizontally and extends to the left 
 sub build_endPipingTop1
 {
 	my %detector = init_det();
@@ -911,6 +967,7 @@ sub build_endPipingTop1
 	print_det(\%configuration, \%detector);
 }
 
+#This pipe extends from airCylinderBottom1 horizontally and extends to the left 
 sub build_endPipingBottom1
 {
 	my %detector = init_det();
@@ -928,6 +985,7 @@ sub build_endPipingBottom1
 	print_det(\%configuration, \%detector);
 }
 
+#-------------------------------------------------------------------------------------------------------------------
 sub build_endPipingTop2
 {
 	my %detector = init_det();
@@ -963,6 +1021,7 @@ sub build_endPipingBottom2
 	print_det(\%configuration, \%detector);
 }
 
+#--------------------------------------------------------------------------------------------------------------------------
 sub build_endPipingTop3
 {
 	my %detector = init_det();
@@ -998,6 +1057,12 @@ sub build_endPipingBottom3
 }
 
 
+
+#-----------------------------------------------------------------------------------
+
+#All the methods are called now, so that these geometries can be built. My research on GEMC and Geant4 and experimentation with these geometries has led me to believe that the order in which these methods are written does not change the final outcome. For instance. the method directly below, totalFrame, acts like the mother frame, or the ROOT, for everything else made in this geometry. Therefore all other geometries are dependent on totalFrame. Even so, I was able to move the line building totalFrame at the very end, and everything still seemed in order. 
+
+#I think that the dependencies between the mother and child volumes are resolved at RUNTIME and not COMPLILE TIME and therefore it doesn't really matter what is the order in which we call the build methods to make the shapes. 
 
 
 
@@ -1046,6 +1111,7 @@ build_pipeToLD2Bottom3();
 
 build_finalTube();
 build_finalTubeExtension();
+build_finalTubeWindow();
 build_endPipingTop1();
 build_endPipingTop2();
 build_endPipingTop3();
