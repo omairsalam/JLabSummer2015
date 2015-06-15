@@ -1,0 +1,24 @@
+<gcard>
+	<detector name="/opt/jlab_software/1.2/Linux_CentOS6.6-x86_64-gcc4.4.7/gemc/2.2/source/experiments/clas12/fc/forwardCarriage" factory="TEXT" variation="original"/>
+	<detector name="/opt/jlab_software/1.2/Linux_CentOS6.6-x86_64-gcc4.4.7/gemc/2.2/source/experiments/clas12/ftof/ftof" factory="TEXT" variation="original"/>
+	<detector name="/opt/jlab_software/1.2/Linux_CentOS6.6-x86_64-gcc4.4.7/gemc/2.2/source/experiments/clas12/dc/dc" factory="TEXT" variation="original"/>
+	<detector name="/opt/jlab_software/1.2/Linux_CentOS6.6-x86_64-gcc4.4.7/gemc/2.2/source/experiments/clas12/ec/ec" factory="TEXT" variation="original"/>
+	<detector name="/opt/jlab_software/1.2/Linux_CentOS6.6-x86_64-gcc4.4.7/gemc/2.2/source/experiments/clas12/pcal/pcal" factory="TEXT" variation="original"/>
+	<detector name="example" factory="TEXT" variation="mine"/>
+
+	<option name="geometry" value="600x600"/>
+		
+	<option name="SCALE_FIELD" value="clas12-torus-big,-1"/>
+	<!-- <option name="NO_FIELD" value="all"/> -->
+		
+	<option name="SIGNALVT" value="ftof_p1a, ftof_p1b"/>
+	<option name="INTEGRATEDRAW" value="ftof_p1a, ftof_p1b"/>
+
+	<option name="BEAM_P" value="e-, 3.0*GeV, 25*deg, 2*deg"/>
+	<option name="SPREAD_P" value="0.5*GeV, 0*deg, 2*deg"/>
+
+	<option name="OUTPUT" value="evio, gmnElectrons2.ev"/>
+	<option name="SAVE_ALL_MOTHERS" value="1"/>
+	
+	<option name="PHYSICS" value="STD + FTFP_BERT"/>
+</gcard>
