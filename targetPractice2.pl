@@ -1,0 +1,1059 @@
+#!/usr/bin/perl -w
+
+# loading GEMC geometry routines
+use strict;
+use lib ("$ENV{GEMC}/io");
+use utils;
+use geometry;
+
+# Define the Help Message
+sub help()
+{
+	print "\n Usage: \n";
+	print "   geometry.pl <configuration filename>\n";
+ 	print "   Will create a target using the variation specified in the configuration file\n";
+	exit;
+}
+
+# Make sure the argument list is correct
+# If not pring the help
+if( scalar @ARGV != 1)
+{
+	help();
+	exit;
+}
+
+# Loading configuration file (first argument)
+#Configuration file contains name of the shape, its version, the format in which the shape will be output, and the ranges of the geometry of the shape. 
+our %configuration = load_configuration($ARGV[0]);
+
+#-------------------------------------------------------------------
+#For all shapes please refer to a the labelled diagram in the package which associates the methods with their respective shapes. 
+#For example, build_cork below will be labelled as 1.1 in the diagram in the package, and its shape will roughly be like the shape drawn two methods down 
+#Similarly, innercork will be labelled as 1.2 in the diagram. 
+#-------------------------------------------------------------------- 
+
+#General Remarks ---------------------------
+# All the windows are made of Aluminium, with a thicknes of 15 micro-inch
+
+sub build_totalFrame 
+{
+	my %detector = init_det();
+	$detector{"name"}        = "biggestFrame";
+	$detector{"mother"}      = "root";
+	$detector{"description"} = "In order to move the picture";
+	$detector{"pos"}         = "0*mm 0*mm 0*mm";
+ 	$detector{"rotation"}    = "0*deg 0*deg 0*deg";
+	$detector{"color"}       = "C875333";
+	$detector{"type"}        = "Box";
+	$detector{"dimensions"}  = "400*mm 400*mm 400*mm";
+	$detector{"material"}    = "vacuum_m9";
+	$detector{"visible"}     = 1;
+	$detector{"style"}       = 1;
+	print_det(\%configuration, \%detector);
+}
+
+
+#The innercork is the liquid hydrogen 
+sub build_innerCork #1.2
+{
+	my %detector = init_det();
+	$detector{"name"}        = "innerCork";
+	$detector{"mother"}      = "biggestFrame";
+	$detector{"description"} = "The liquid hydrogen";
+	$detector{"pos"}         = "0*mm 0*mm 27.0193*mm";
+ 	$detector{"rotation"}    = "0*deg 0*deg 0*deg";
+	$detector{"color"}       = "C875333";
+	$detector{"type"}        = "Cons";
+	$detector{"dimensions"}  = "0*mm 2.2509*mm 0*mm 5.49125*mm 0.98535*mm 270*deg 360*deg";
+	$detector{"material"}    = "G4_lH2";
+	$detector{"visible"}     = 1;
+	$detector{"style"}       = 1;
+	print_det(\%configuration, \%detector);
+}
+
+#This is the Aluminium casing for the liquid hydrogen
+sub build_innerCorkCase #1.2
+{
+	my %detector = init_det();
+	$detector{"name"}        = "innerCorkCase";
+	$detector{"mother"}      = "biggestFrame";
+	$detector{"description"} = "The container for the liquid hydrogen";
+	$detector{"pos"}         = "0*mm 0*mm 26.0193*mm";
+ 	$detector{"rotation"}    = "0*deg 0*deg 0*deg";
+	$detector{"color"}       = "C875333";
+	$detector{"type"}        = "Cons";
+	$detector{"dimensions"}  = "1.8135*mm 2.2509*mm 5.05385*mm 5.49125*mm 0.98535*mm 270*deg 360*deg";
+	$detector{"material"}    = "G4_Al";
+	$detector{"visible"}     = 1;
+	$detector{"style"}       = 1;
+	print_det(\%configuration, \%detector);
+}
+
+
+#This is a supporting structure fo the container of liquid hydrogen 
+sub build_cork #1.1
+{
+	my %detector = init_det();
+	$detector{"name"}        = "cork";
+	$detector{"mother"}      = "biggestFrame";
+	$detector{"description"} = "The structure that supports the liquid hydrogen";
+	$detector{"pos"}         = "0*mm 0*mm 25.53395*mm";
+ 	$detector{"rotation"}    = "180*deg 0*deg 0*deg";
+	$detector{"color"}       = "C875333";
+	$detector{"type"}        = "Cons";
+	$detector{"dimensions"}  = "5.23735*mm 5.49125*mm 5.5841*mm 5.838*mm 2.48275*mm 270*deg 360*deg";
+	$detector{"material"}    = "G4_Al";
+	$detector{"visible"}     = 1;
+	$detector{"style"}       = 1;
+	print_det(\%configuration, \%detector);
+}
+
+
+#There is an opening in the centre of the innerCorkCase which is closed off  by making a very thin window 
+sub build_corkWindow #1.3
+{
+	my %detector = init_det();
+	$detector{"name"}        = "corkWindow";
+	$detector{"mother"}      =  "biggestFrame";
+	$detector{"description"} = "The glass window for the top cork";
+	$detector{"pos"}         = "0*mm 0*mm 26.0193*mm";
+ 	$detector{"rotation"}    = "0*deg 0*deg 0*deg";
+	$detector{"color"}       = "FF00003";
+	$detector{"type"}        = "Tube";
+	$detector{"dimensions"}  = "0*mm 1.8135*mm 0.000015*in 270*deg 360*deg";
+	$detector{"material"}    = "G4_Al";
+	$detector{"visible"}     = 1;
+	$detector{"style"}       = 1;
+	print_det(\%configuration, \%detector);
+}
+#
+#    
+#        ___________
+#       /\   1.1   /\
+#      /  \_______/  \
+#     /      1.3      \   
+#    /                 \
+#   /        1.2        \ 
+#   ~~~~~~~~~~~~~~~~~~~~~
+
+
+#---------------------------------------------------------------------------------------------------
+
+
+#This is the outermost layer and is comprised of two cones, the kaptonLayer and the kaptonCone 
+
+#The kaptonLayer is the longer cone that runs through the length of the target
+sub build_kaptonLayer #2.1
+{
+	my %detector = init_det();
+	$detector{"name"}        = "kapLayer";
+	$detector{"mother"}      = "biggestFrame";
+	$detector{"description"} = "The outermost cone that encapsulates the cork and the liquid duterium constructs";
+	$detector{"pos"}         = "0*mm 0*mm 0*mm";
+ 	$detector{"rotation"}    = "180*deg 0*deg 0*deg";
+	$detector{"color"}       = "99CC003";
+	$detector{"type"}        = "Cons";
+	$detector{"dimensions"}  = "7.9911*mm 7.9912*mm 17.90044*mm 17.90045*mm 39.28*mm 270*deg 360*deg";
+	$detector{"material"}    = "G4_KAPTON";
+	$detector{"visible"}     = 1;
+	$detector{"style"}       = 1;
+	print_det(\%configuration, \%detector);
+}
+
+#The kaptonCone is the smaller cone that basically caps the kaptonLayer cone 
+sub build_kaptonCone #2.2
+{
+	my %detector = init_det();
+	$detector{"name"}        = "kapCone";
+	$detector{"mother"}      = "biggestFrame";
+	$detector{"description"} = "the cap of the outermost cone";
+	$detector{"pos"}         = "0*mm 0*mm 41.11685*mm";
+ 	$detector{"rotation"}    = "180*deg 0*deg 0*deg";
+	$detector{"color"}       = "99CC003";
+	$detector{"type"}        = "Cons";
+	$detector{"dimensions"}  = "1.9982*mm 1.9983*mm 7.99124*mm 7.99125*mm 1.83685*mm 270*deg 360*deg";
+	$detector{"material"}    = "G4_KAPTON";
+	$detector{"visible"}     = 1;
+	$detector{"style"}       = 1;
+	print_det(\%configuration, \%detector);
+}
+
+
+#There is an opening in the center of the kaptonCone which is covered off by making an aluminium window 
+sub build_kaptonConeWindow #2.3  
+{
+	my %detector = init_det();
+	$detector{"name"}        = "kaptonConeWindow";
+	$detector{"mother"}      = "biggestFrame";
+	$detector{"description"} = "The window for the kapton cone ";
+	$detector{"pos"}         = "0*mm 0*mm 42.9537*mm";
+	$detector{"rotation"}    = "0*deg 0*deg 0*deg";
+	$detector{"color"}       = "FF00003";
+	$detector{"type"}        = "Tube";
+	$detector{"dimensions"}  = "0.0001*mm 1.9982*mm 0.000015*in 270*deg 360*deg";
+	$detector{"material"}    = "G4_Al";
+	$detector{"visible"}     = 1;
+	$detector{"style"}       = 1;
+	print_det(\%configuration, \%detector);
+}
+
+#--------------------------------------------------------------------------------------------------------------------
+
+#The LD2 Storage is the liquid duterium
+sub build_LD2Storage #4.1
+{
+	my %detector = init_det();
+	$detector{"name"}        = "ld2Storage";
+	$detector{"mother"}      = "biggestFrame";
+	$detector{"description"} = "the liquid duterimum";
+	$detector{"pos"}         = "0*mm 0*mm -6.396*mm";
+ 	$detector{"rotation"}    = "180*deg 0*deg 0*deg";
+	$detector{"color"}       = "8000003";
+	$detector{"type"}        = "Cons";
+	$detector{"dimensions"}  = "0.001*mm 4.4162*mm 0.001*mm 10.1119*mm 20.3958*mm 270*deg 360*deg";
+	$detector{"material"}    = "LD2";
+	$detector{"visible"}     = 1;
+	$detector{"style"}       = 1;
+	print_det(\%configuration, \%detector);
+}
+
+#This is the casing for the liquid duterium.
+sub build_LD2StorageCover #4.2
+{
+	my %detector = init_det();
+	$detector{"name"}        = "ld2StorageCover";
+	$detector{"mother"}      = "biggestFrame";
+	$detector{"description"} = "the outer casing for the whole LD2 Storage cone";
+	$detector{"pos"}         = "0*mm 0*mm -6.396*mm";
+ 	$detector{"rotation"}    = "180*deg 0*deg 0*deg";
+	$detector{"color"}       = "0FE61E3";
+	$detector{"type"}        = "Cons";
+	$detector{"dimensions"}  = "4.4151*mm 4.4162*mm 5.000*mm 10.1119*mm 20.3958*mm 270*deg 360*deg";
+	$detector{"material"}    = "G4_KAPTON";
+	$detector{"visible"}     = 1;
+	$detector{"style"}       = 1;
+	print_det(\%configuration, \%detector);
+}
+
+
+#This is some more liquid duterium as a cone that sits above the previous cone that we defined (LD2 Storage)
+sub build_LD2Cap #5.1
+{
+	my %detector = init_det();
+	$detector{"name"}        = "ld2Cap";
+	$detector{"mother"}      = "biggestFrame";
+	$detector{"description"} = "the cap for the LD2 storage";
+	$detector{"pos"}         = "0*mm 0*mm 14.8*mm";
+ 	$detector{"rotation"}    = "0*deg 0*deg 0*deg";
+	$detector{"color"}       = "8000003";
+	$detector{"type"}        = "Cons";
+	$detector{"dimensions"}  = "0.0001*mm 4.4162*mm 0.0001*mm  2*mm 0.85495*mm 270*deg 360*deg";
+	$detector{"material"}    = "LD2";
+	$detector{"visible"}     = 1;
+	$detector{"style"}       = 1;
+	print_det(\%configuration, \%detector);
+}
+
+#This is the casing for the liquid duterium cone made above 
+sub build_LD2CapCover #5.2
+{
+	my %detector = init_det();
+	$detector{"name"}        = "ld2CapCover";
+	$detector{"mother"}      = "biggestFrame";
+	$detector{"description"} = "The outer-copper-casing of the front cone of the LD2 Storage";
+	$detector{"pos"}         = "0*mm 0*mm 14.8*mm";
+ 	$detector{"rotation"}    = "0*deg 0*deg 0*deg";
+	$detector{"color"}       = "0FE61E3";
+	$detector{"type"}        = "Cons";
+	$detector{"dimensions"}  = "4.4161*mm 4.4162*mm 1.9*mm 2*mm 0.85495*mm 270*deg 360*deg";
+	$detector{"material"}    = "G4_KAPTON";
+	$detector{"visible"}     = 1;
+	$detector{"style"}       = 1;
+	print_det(\%configuration, \%detector);
+}
+
+
+#There is an opening in the center of the ld2Cap which is covered by making a very thin aluminium window
+sub build_LD2CapTopCover #5.3 
+{
+	my %detector = init_det();
+	$detector{"name"}        = "ld2TopCapCover";
+	$detector{"mother"}      = "biggestFrame";
+	$detector{"description"} = "The lid of the front cone of the LD2 Storage ";
+	$detector{"pos"}         = "0*mm 0*mm 15.65495*mm";
+	$detector{"rotation"}    = "0*deg 0*deg 0*deg";
+	$detector{"color"}       = "FF00003";
+	$detector{"type"}        = "Tube";
+	$detector{"dimensions"}  = "0.0001*mm 2*mm 0.000015*in  270*deg 360*deg";
+	$detector{"material"}    = "G4_Al";
+	$detector{"visible"}     = 1;
+	$detector{"style"}       = 1;
+	print_det(\%configuration, \%detector);
+}
+
+
+#---------------------------------------------------------------------------------------------------------------------
+
+
+#There are 3 pieces of foam that have been made to surround the liquid duterium shapes shown above. The 3 pieces are all identical to each
+#other and were made in parts so that they could be placed with gaps between them, as per the specifications of the geometry
+#The foam pieces are approximately 111 degree wide and have consistent gaps beteween them. 
+
+
+sub build_foamLayer1 #3.1
+{
+	my %detector = init_det();
+	$detector{"name"}        = "foamLayer1";
+	$detector{"mother"}      = "biggestFrame";
+	$detector{"description"} = "the first foam layer approximately 111 degree wide enclosing the liquid duterium";
+	$detector{"pos"}         = "0*mm 0*mm -1.5*mm";
+ 	$detector{"rotation"}    = "180*deg 0*deg 0*deg";
+	$detector{"color"}       = "FFFF003";
+	$detector{"type"}        = "Cons";
+	$detector{"dimensions"}  = "3.5422*mm 5.838*mm 10.16675*mm 12.69565*mm 24.57105*mm 214.49*deg 111.02*deg";
+	$detector{"material"}    = "Rohacell31";
+	$detector{"visible"}     = 1;
+	$detector{"style"}       = 1;
+	print_det(\%configuration, \%detector);
+}
+
+sub build_foamLayer2 #3.1
+{
+	my %detector = init_det();
+	$detector{"name"}        = "foamLayer2";
+	$detector{"mother"}      = "biggestFrame";
+	$detector{"description"} = "the second foam layer approximately 111 degree wide enclosing the liquid duterium";
+	$detector{"pos"}         = "0*mm 0*mm -1.5*mm";
+ 	$detector{"rotation"}    = "180*deg 0*deg 0*deg";
+	$detector{"color"}       = "FFFF003";
+	$detector{"type"}        = "Cons";
+	$detector{"dimensions"}  = "3.5422*mm 5.838*mm 10.16675*mm 12.69565*mm 24.57105*mm 334.4855*deg 111.02*deg";
+	$detector{"material"}    = "Rohacell31";
+	$detector{"visible"}     = 1;
+	$detector{"style"}       = 1;
+	print_det(\%configuration, \%detector);
+}
+
+
+sub build_foamLayer3 #3.1
+{
+	my %detector = init_det();
+	$detector{"name"}        = "foamLayer3";
+	$detector{"mother"}      = "biggestFrame";
+	$detector{"description"} = "the third foam layer approximately 111 degree wide enclosing the liquid duterium ";
+	$detector{"pos"}         = "0*mm 0*mm -1.5*mm";
+ 	$detector{"rotation"}    = "180*deg 0*deg 0*deg";
+	$detector{"color"}       = "FFFF003";
+	$detector{"type"}        = "Cons";
+	$detector{"dimensions"}  = "3.5422*mm 5.838*mm 10.16675*mm 12.69565*mm 24.57105*mm 454.481*deg 111.02*deg";
+	$detector{"material"}    = "Rohacell31";
+	$detector{"visible"}     = 1;
+	$detector{"style"}       = 1;
+	print_det(\%configuration, \%detector);
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------
+
+#This is a kapton casing for the foam as well as the cork (the structure containing the liquid hydrogen (see above) ) 
+sub build_kaptonCoverForFoam #3.1
+{
+	my %detector = init_det();
+	$detector{"name"}        = "kaptonCover";
+	$detector{"mother"}      = "biggestFrame";
+	$detector{"description"} = "The kapton that encloses the LH2 and the foam";
+	$detector{"pos"}         = "0*mm 0*mm 1.0*mm";
+ 	$detector{"rotation"}    = "180*deg 0*deg 0*deg";
+	$detector{"color"}       = "B266FF3";
+	$detector{"type"}        = "Cons";
+	$detector{"dimensions"}  = "5.4669*mm 5.838*mm 12.69565*mm 12.69566*mm 27.0538mm 270*deg 360*deg";
+	$detector{"material"}    = "G4_C";
+	$detector{"visible"}     = 1;
+	$detector{"style"}       = 1;
+	print_det(\%configuration, \%detector);
+}
+
+#--------------------------------------------------------------------------------------------------------
+
+#PLUMBING
+
+#This is the central pipeline that extends into the liquid duterium container 
+sub build_centralPipeline #6.1
+{
+	my %detector = init_det();
+	$detector{"name"}        = "centralPipeline";
+	$detector{"mother"}      = "biggestFrame";
+	$detector{"description"} = "The main pipeline going into the LD2 Storage Cone";
+	$detector{"pos"}         = "0*mm 0*mm -48.6557*mm";
+ 	$detector{"rotation"}    = "0*deg 0*deg 0*deg";
+	$detector{"color"}       = "CCCC003";
+	$detector{"type"}        = "Tube";
+	$detector{"dimensions"}  = "2*mm 5*mm 43.2062*mm 270*deg 360*deg";
+	$detector{"material"}    = "G4_Cu";
+	$detector{"visible"}     = 1;
+	$detector{"style"}       = 1;
+	print_det(\%configuration, \%detector);
+}
+
+#There is a hole at the front of this pipeline which is covered by making a thin aluminium window
+sub build_centralPipelineWindow #6.2
+{
+	my %detector = init_det();
+	$detector{"name"}        = "centralPipelineWindow";
+	$detector{"mother"}      = "biggestFrame";
+	$detector{"description"} = "The window for the main pipeline";
+	$detector{"pos"}         = "0*mm 0*mm -5.5*mm";
+ 	$detector{"rotation"}    = "0*deg 0*deg 0*deg";
+	$detector{"color"}       = "FF0000";
+	$detector{"type"}        = "Tube";
+	$detector{"dimensions"}  = "0.00001*mm 2*mm 0.000015*in 270*deg 360*deg";
+	$detector{"material"}    = "G4_Al";
+	$detector{"visible"}     = 1;
+	$detector{"style"}       = 1;
+	print_det(\%configuration, \%detector);
+}
+
+
+#Part of this pipeline is in contact with the liquid duterium and is a smaller tube 
+sub build_firstOuterPipe #7.1
+{
+	my %detector = init_det();
+	$detector{"name"}        = "firstOuterPipe";
+	$detector{"mother"}      = "biggestFrame";
+	$detector{"description"} = "The pipeline touching the ld2 storage as well as the foam layer";
+	$detector{"pos"}         = "0*mm 0*mm -49.1913*mm";
+ 	$detector{"rotation"}    = "180*deg 0*deg 0*deg";
+	$detector{"color"}       = "0FE61E3";
+	$detector{"type"}        = "Tube";
+	$detector{"dimensions"}  = "5*mm 14.2672*mm 23.13425*mm 270*deg 360*deg";
+	$detector{"material"}    = "G4_Cu";
+	$detector{"visible"}     = 1;
+	$detector{"style"}       = 1;
+	print_det(\%configuration, \%detector);
+
+}
+
+#This pipeline extends back from the pipeline made above and is a larger tube
+sub build_secondOuterPipe #8.1
+{
+	my %detector = init_det();
+	$detector{"name"}        = "secondOuterPipe";
+	$detector{"mother"}      = "biggestFrame";
+	$detector{"description"} = "The secondary pipeline extending the first outer pipeline";
+	$detector{"pos"}         = "0*mm 0*mm -82.1387*mm";
+ 	$detector{"rotation"}    = "180*deg 0*deg 0*deg";
+	$detector{"color"}       = "0FE61E3";
+	$detector{"type"}        = "Tube";
+	$detector{"dimensions"}  = "5*mm 18.8116*mm 9.81315*mm 270*deg 360*deg";
+	$detector{"material"}    = "G4_Cu";
+	$detector{"visible"}     = 1;
+	$detector{"style"}       = 1;
+	print_det(\%configuration, \%detector);
+}
+
+#          secondOuterPipe        
+#          ----------
+#                     ------------------
+#                         
+#                     ------------------
+#          ----------        firstOuterPipe
+
+
+
+#This pipeline has 4 components
+ 
+#If these components are being looked at with reference to the diagram, backwards means left and forward means right 
+
+#1) This is a tube that starts at the back of the kapton Layer cone (#2.1) mentioned above and extends backwards
+sub build_thirdOuterPipe #9.1
+{
+	my %detector = init_det();
+	$detector{"name"}        = "thirdOuterPipe";
+	$detector{"mother"}      = "biggestFrame";
+	$detector{"description"} = "The secondary pipeline extending the first outer pipeline";
+	$detector{"pos"}         = "0*mm 0*mm -45.23065*mm";
+ 	$detector{"rotation"}    = "180*deg 0*deg 0*deg";
+	$detector{"color"}       = "0FE61E3";
+	$detector{"type"}        = "Tube";
+	$detector{"dimensions"}  = "16.9504*mm 19.9832*mm 5.95065*mm 270*deg 360*deg";
+	$detector{"material"}    = "G4_Cu";
+	$detector{"visible"}     = 1;
+	$detector{"style"}       = 1;
+	print_det(\%configuration, \%detector);
+}
+
+#2) This is a cone that starts at the front of the tube just made above, extends forward, and goes over the sides of the kapton layer cone
+sub build_ccThirdOuterPipe #9.2
+{
+	my %detector = init_det();
+	$detector{"name"}        = "ccThirdOuterPipe";
+	$detector{"mother"}      = "biggestFrame";
+	$detector{"description"} = "The top cone of the third outerpipe, connecting to the kapton layer";
+	$detector{"pos"}         = "0*mm 0*mm -37.51625*mm";
+ 	$detector{"rotation"}    = "0*deg 0*deg 0*deg";
+	$detector{"color"}       = "0FE61E3";
+	$detector{"type"}        = "Cons";
+	$detector{"dimensions"}  = "16.9504*mm 19.9232*mm 16.9504*mm 17.9504*mm 1.76375*mm 270*deg 360*deg";
+	$detector{"material"}    = "G4_KAPTON";
+	$detector{"visible"}     = 1;
+	$detector{"style"}       = 1;
+	print_det(\%configuration, \%detector);
+}
+
+#3) This is a cone that starts at the back of the tube #9.1 and extends backwards
+sub build_cThirdOuterPipe #9.3
+{
+	my %detector = init_det();
+	$detector{"name"}        = "cThirdOuterPipe";
+	$detector{"mother"}      = "biggestFrame";
+	$detector{"description"} = "The cone for the third outer pipe";
+	$detector{"pos"}         = "0*mm 0*mm -55.19705*mm";
+ 	$detector{"rotation"}    = "0*deg 0*deg 0*deg";
+	$detector{"color"}       = "0FE61E3";
+	$detector{"type"}        = "Cons";
+	$detector{"dimensions"}  = "16.9504*mm 34.01*mm 16.9504*mm 19.9832*mm 4.01575*mm 270*deg 360*deg";
+	$detector{"material"}    = "G4_KAPTON";
+	$detector{"visible"}     = 1;
+	$detector{"style"}       = 1;
+	print_det(\%configuration, \%detector);
+}
+
+
+#4) This is a tube that starts at the back of the #9.3 and extends backwards 
+sub build_tThirdOuterPipe #9.4
+{
+	my %detector = init_det();
+	$detector{"name"}        = "tThirdOuterPipe";
+	$detector{"mother"}      = "biggestFrame";
+	$detector{"description"} = "The Tube (cylinder) for the third outer pipe";
+	$detector{"pos"}         = "0*mm 0*mm -75.7128*mm";
+ 	$detector{"rotation"}    = "180*deg 0*deg 0*deg";
+	$detector{"color"}       = "0FE61E3";
+	$detector{"type"}        = "Tube";
+	$detector{"dimensions"}  = "16.9504*mm 34.01*mm 16.5*mm 270*deg 360*deg";
+	$detector{"material"}    = "G4_Cu";
+	$detector{"visible"}     = 1;
+	$detector{"style"}       = 1;
+	print_det(\%configuration, \%detector);
+}
+
+#--------------------------------------------------------------------------------------------------------------------------------
+
+#The following pipes will be providing liquid hydrogen and duterium to the storage tanks mentioned above
+
+
+
+sub build_airCylinderVerticalTop1
+{
+	my %detector = init_det();
+	$detector{"name"}        = "airCylinderVerticalTop1";
+	$detector{"mother"}      = "biggestFrame";
+	$detector{"description"} = "The cylinder from which we will feed liquid duterium";
+	$detector{"pos"}         = "0*mm 24.4041*mm -68.28665*mm";
+ 	$detector{"rotation"}    = "-90*deg 0*deg 0*deg";
+	$detector{"color"}       = "66FFFF";
+	$detector{"type"}        = "Tube";
+	$detector{"dimensions"}  = "3.8635*mm 3.8735*mm 8.5188*mm 270*deg 360*deg";
+	$detector{"material"}    = "G4_Cu";
+	$detector{"visible"}     = 1;
+	$detector{"style"}       = 1;
+	print_det(\%configuration, \%detector);
+}
+
+
+sub build_pipeToLD2Top1
+{
+	my %detector = init_det();
+	$detector{"name"}        = "pipeToLD2Top1";
+	$detector{"mother"}      = "biggestFrame";
+	$detector{"description"} = "The cylinder connecting to the LD2 tank";
+	$detector{"pos"}         = "0*mm 15.1323*mm -55.68665*mm";
+ 	$detector{"rotation"}    = "0*deg 0*deg 0*deg";
+	$detector{"color"}       = "66FFFF";
+	$detector{"type"}        = "Tube";
+	$detector{"dimensions"}  = "1.4090*mm 1.4091*mm 16.56905*mm 270*deg 360*deg";
+	$detector{"material"}    = "G4_Cu";
+	$detector{"visible"}     = 1;
+	$detector{"style"}       = 1;
+	print_det(\%configuration, \%detector);
+}
+
+sub build_airCylinderVerticalBottom1
+{
+	my %detector = init_det();
+	$detector{"name"}        = "airCylinderVerticalBottom1";
+	$detector{"mother"}      = "biggestFrame";
+	$detector{"description"} = "Entry/Exit Point number 2 for the liquid duterium";
+	$detector{"pos"}         = "0*mm 13.1679*mm -79.5837*mm";
+ 	$detector{"rotation"}    = "-90*deg 0*deg 0*deg";
+	$detector{"color"}       = "CC0066";
+	$detector{"type"}        = "Tube";
+	$detector{"dimensions"}  = "3.8735*mm 3.8736*mm 7.405*mm 270*deg 360*deg";
+	$detector{"material"}    = "G4_Cu";
+	$detector{"visible"}     = 1;
+	$detector{"style"}       = 1;
+	print_det(\%configuration, \%detector);
+}
+
+sub build_pipeToLD2Bottom1
+{
+	my %detector = init_det();
+	$detector{"name"}        = "pipeToLD2Bottom1";
+	$detector{"mother"}      = "biggestFrame";
+	$detector{"description"} = "The cylinder connecting the vertical pipe to the LD2 tank";
+	$detector{"pos"}         = "0*mm 5.001*mm -55.247325*mm";
+ 	$detector{"rotation"}    = "0*deg 0*deg 0*deg";
+	$detector{"color"}       = "CC0066";
+	$detector{"type"}        = "Tube";
+	$detector{"dimensions"}  = "0.85*mm 0.86*mm 28.191375*mm 270*deg 360*deg";
+	$detector{"material"}    = "G4_Cu";
+	$detector{"visible"}     = 1;
+	$detector{"style"}       = 1;
+	print_det(\%configuration, \%detector);
+}
+
+
+
+
+#sub build_LD2CapWindow #15 #window for #2 
+#{
+#	my %detector = init_det();
+#	$detector{"name"}        = "ld2CapWindow";
+#	$detector{"mother"}      = "ld2Cap";
+#	$detector{"description"} = "The glass window for the LD2 window";
+#	$detector{"pos"}         = "0*mm 0*mm 0.86495*mm";
+#	$detector{"rotation"}    = "0*deg 0*deg 0*deg";
+#	$detector{"color"}       = "FF00003";
+#	$detector{"type"}        = "Tube";
+#	$detector{"dimensions"}  = "0*mm 1.8135*mm 0.001*mm 270*deg 360*deg";
+#	$detector{"material"}    = "G4_Cu";
+#	$detector{"visible"}     = 0;
+#	$detector{"style"}       = 1;
+#	print_det(\%configuration, \%detector);
+#}
+
+
+#!!!!!!!!!--------------------------------------------------------SECOND FOAM LAYER --------------!!!!!!!!!!!!!!!!!!!!!!!
+
+sub build_airCylinderVerticalTop2
+{
+	my %detector = init_det();
+	$detector{"name"}        = "airCylinderVerticalTop2";
+	$detector{"mother"}      = "biggestFrame";
+	$detector{"description"} = "The cylinder from which we will feed liquid duterium";
+	$detector{"pos"}         = "19.3958*mm -13.3958*mm -68.58665*mm"; #"0*mm -25.20545*mm 66.98665*mm"; #"0*mm 24.4041*mm -68.28665*mm";
+ 	$detector{"rotation"}    = "90*deg 424.4835*deg 180*deg";
+	$detector{"color"}       = "66FFFF";
+	$detector{"type"}        = "Tube";
+	$detector{"dimensions"}  = "3.8635*mm 3.8735*mm 8.5188*mm 270*deg 360*deg";
+	$detector{"material"}    = "G4_Cu";
+	$detector{"visible"}     = 1;
+	$detector{"style"}       = 1;
+	print_det(\%configuration, \%detector);
+}
+
+
+sub build_pipeToLD2Top2
+{
+	my %detector = init_det();
+	$detector{"name"}        = "pipeToLD2Top2";
+	$detector{"mother"}      = "biggestFrame";
+	$detector{"description"} = "The cylinder connecting to the LD2 tank";
+	$detector{"pos"}         = "12*mm -8.4162*mm -55.68665*mm"; #"0*mm 15.1323*mm -55.68665*mm";
+ 	$detector{"rotation"}    = "0*deg 0*deg 0*deg";
+	$detector{"color"}       = "66FFFF";
+	$detector{"type"}        = "Tube";
+	$detector{"dimensions"}  = "1.4090*mm 1.4091*mm 16.56905*mm 270*deg 360*deg";
+	$detector{"material"}    = "G4_Cu";
+	$detector{"visible"}     = 1;
+	$detector{"style"}       = 1;
+	print_det(\%configuration, \%detector);
+}
+
+sub build_airCylinderVerticalBottom2
+{
+	my %detector = init_det();
+	$detector{"name"}        = "airCylinderVerticalBottom2";
+	$detector{"mother"}      = "biggestFrame";
+	$detector{"description"} = "Entry/Exit Point number 2 for the liquid duterium";
+	$detector{"pos"}         = "10.0*mm -9.119*mm -79.5837*mm"; # "0*mm 10.8129*mm -79.5837*mm";
+ 	$detector{"rotation"}    = "90*deg 424.4835*deg 180*deg"; #"90*deg 424.4835*deg 180*deg";
+	$detector{"color"}       = "CC0066";
+	$detector{"type"}        = "Tube";
+	$detector{"dimensions"}  = "3.8735*mm 3.8736*mm 7.405*mm 270*deg 360*deg";
+	$detector{"material"}    = "G4_Cu";
+	$detector{"visible"}     = 1;
+	$detector{"style"}       = 1;
+	print_det(\%configuration, \%detector);
+}
+
+sub build_pipeToLD2Bottom2
+{
+	my %detector = init_det();
+	$detector{"name"}        = "pipeToLD2Bottom2";
+	$detector{"mother"}      = "biggestFrame";
+	$detector{"description"} = "The cylinder connecting the vertical pipe to the LD2 tank";
+	$detector{"pos"}         = "3.5*mm -4.5*mm -55.247325*mm"; # "0*mm 5.001*mm -55.247325*mm";
+ 	$detector{"rotation"}    = "0*deg 0*deg 0*deg";
+	$detector{"color"}       = "CC0066";
+	$detector{"type"}        = "Tube";
+	$detector{"dimensions"}  = "0.85*mm 0.86*mm 28.191375*mm 270*deg 360*deg";
+	$detector{"material"}    = "G4_Cu";
+	$detector{"visible"}     = 1;
+	$detector{"style"}       = 1;
+	print_det(\%configuration, \%detector);
+}
+
+
+#!!!!!--------------------THIRD FOAM LAYER------------------!!!!!!!!!!!!!!!!!!!!!!!!!!1
+
+
+sub build_airCylinderVerticalTop3
+{
+	my %detector = init_det();
+	$detector{"name"}        = "airCylinderVerticalTop3";
+	$detector{"mother"}      = "biggestFrame";
+	$detector{"description"} = "The cylinder from which we will feed liquid duterium";
+	$detector{"pos"}         = "-19.3958*mm -13.6958*mm -68.58665*mm"; # "-21.7*mm 12*mm 66.98665*mm"; #"-22.0*mm 12.5*mm 66.98665*mm" # "-20.3958*mm -14.6958*mm -68.58665*mm"
+ 	$detector{"rotation"}    = "90*deg 300.4835*deg 180*deg"; # "90*deg 244.4835*deg 0*deg"; #
+	$detector{"color"}       = "66FFFF";
+	$detector{"type"}        = "Tube";
+	$detector{"dimensions"}  = "3.8635*mm 3.8735*mm 8.5188*mm 270*deg 360*deg";
+	$detector{"material"}    = "G4_Cu";
+	$detector{"visible"}     = 1;
+	$detector{"style"}       = 1;
+	print_det(\%configuration, \%detector);
+}
+
+sub build_pipeToLD2Top3
+{
+	my %detector = init_det();
+	$detector{"name"}        = "pipeToLD2Top3";
+	$detector{"mother"}      = "biggestFrame";
+	$detector{"description"} = "The cylinder connecting to the LD2 tank";
+	$detector{"pos"}         = "-12.5*mm -8.9162*mm -55.68665*mm"; # "12*mm -8.4162*mm -55.68665*mm"
+ 	$detector{"rotation"}    = "0*deg 0*deg 0*deg";
+	$detector{"color"}       = "66FFFF";
+	$detector{"type"}        = "Tube";
+	$detector{"dimensions"}  = "1.4090*mm 1.4091*mm 16.56905*mm 270*deg 360*deg";
+	$detector{"material"}    = "G4_Cu";
+	$detector{"visible"}     = 1;
+	$detector{"style"}       = 1;
+	print_det(\%configuration, \%detector);
+}
+
+sub build_airCylinderVerticalBottom3
+{
+	my %detector = init_det();
+	$detector{"name"}        = "airCylinderVerticalBottom3";
+	$detector{"mother"}      = "biggestFrame";
+	$detector{"description"} = "Entry/Exit Point number 2 for the liquid duterium";
+	$detector{"pos"}         = "-10.0*mm -8.119*mm -79.5837*mm"; #10.0*mm -7.819*mm -79.5837*mm"
+ 	$detector{"rotation"}    = "90*deg 300.4835*deg 180*deg"; # "90*deg 424.4835*deg 180*deg"
+	$detector{"color"}       = "CC0066";
+	$detector{"type"}        = "Tube";
+	$detector{"dimensions"}  = "3.8735*mm 3.8736*mm 7.405*mm 270*deg 360*deg";
+	$detector{"material"}    = "G4_Cu";
+	$detector{"visible"}     = 1;
+	$detector{"style"}       = 1;
+	print_det(\%configuration, \%detector);
+}
+
+sub build_pipeToLD2Bottom3
+{
+	my %detector = init_det();
+	$detector{"name"}        = "pipeToLD2Bottom3";
+	$detector{"mother"}      = "biggestFrame";
+	$detector{"description"} = "The cylinder connecting the vertical pipe to the LD2 tank";
+	$detector{"pos"}         = "-3.5*mm -4.5*mm -55.247325*mm"; #"3.5*mm -4.5*mm -55.247325*mm"
+ 	$detector{"rotation"}    = "0*deg 0*deg 0*deg";
+	$detector{"color"}       = "CC0066";
+	$detector{"type"}        = "Tube";
+	$detector{"dimensions"}  = "0.85*mm 0.86*mm 28.191375*mm 270*deg 360*deg";
+	$detector{"material"}    = "G4_Cu";
+	$detector{"visible"}     = 1;
+	$detector{"style"}       = 1;
+	print_det(\%configuration, \%detector);
+}
+
+sub build_finalTube
+{
+	my %detector = init_det();
+	$detector{"name"}        = "finalTube";
+	$detector{"mother"}      = "biggestFrame";
+	$detector{"description"} = "The final tube that encloses everything ";
+	$detector{"pos"}         = "0*mm 0*mm -28*mm";
+ 	$detector{"rotation"}    = "0*deg 0*deg 0*deg";
+	$detector{"color"}       = "FF99993";
+	$detector{"type"}        = "Tube";
+	$detector{"dimensions"}  = "43.6533*mm 50.0033*mm 64.09025*mm 270*deg 360*deg";
+	$detector{"material"}    = "G4_Cu";
+	$detector{"visible"}     = 1;
+	$detector{"style"}       = 1;
+	print_det(\%configuration, \%detector);
+}
+
+
+sub build_topCap
+{
+	my %detector = init_det();
+	$detector{"name"}        = "emptyCone";
+	$detector{"mother"}      = "shell";
+	$detector{"description"} = "The cone shaped crater made inside the shell";
+	$detector{"pos"}         = "0*mm 50.96835*mm 0*mm";
+	$detector{"rotation"}    = "-270*deg 0*deg 0*deg";
+	$detector{"color"}       = "8800003";
+	$detector{"type"}        = "Cons";
+	$detector{"dimensions"}  = "0*cm 3.7059*mm 0*cm 4.49185*mm 8.91505*mm 270*deg 360*deg"; #0.001*mm 3.7059*mm 0.001*mm 4.49185*mm 40.3500*mm 270*deg 360*deg#0*cm 5.7059*cm 0*cm 0.49185*cm 400.3500*mm 270*deg 360*deg
+	$detector{"material"}    = "Component";
+	$detector{"visible"}     = 0;
+	$detector{"style"}       = 1;
+	print_det(\%configuration, \%detector);
+
+
+	%detector = init_det();
+	$detector{"name"}        = "outsideProngs";
+	$detector{"mother"}      = "shell";
+	$detector{"description"} = "The cylinder that is going to extend from the shell";#"43.6533*mm 50.0033*mm 0*deg 180*deg 0*deg 180*deg"
+	$detector{"pos"}         = "0*mm 50.96835*mm 0*mm";
+	$detector{"rotation"}    = "-90*deg 0*deg 0*deg";
+	$detector{"color"}       = "4400193";
+	$detector{"type"}        = "Tube";
+	$detector{"dimensions"}  = "0*mm 9.52455*mm 8.31505*mm 0*deg 360*deg";#"2*cm 2*cm 8*cm
+	$detector{"material"}    = "Component";
+	$detector{"visible"}     = 0;
+	$detector{"style"}       = 1;
+	print_det(\%configuration, \%detector);
+
+
+	%detector = init_det();
+	$detector{"name"}        = "shell";
+	$detector{"mother"}      = "finalTube";
+	$detector{"description"} = "The shell which acts like the cap for the cylinder";#"43.6533*mm 50.0033*mm 0*deg 180*deg 0*deg 180*deg"
+	$detector{"pos"}         = "0*mm 0*mm 0*mm";
+	$detector{"rotation"}    = "-90*deg 0*deg 0*deg";
+	$detector{"color"}       = "4400193";
+	$detector{"type"}        = "Sphere";
+	$detector{"dimensions"}  = "43.6533*mm 50.0033*mm 0*deg 180*deg 0*deg 180*deg";#"2*cm 2*cm 8*cm
+	$detector{"material"}    = "Component";
+	$detector{"visible"}     = 0;
+	$detector{"style"}       = 1;
+	print_det(\%configuration, \%detector);
+
+
+	
+	%detector = init_det();
+	$detector{"name"}        = "shellWithProngs";
+	$detector{"mother"}      = "finalTube";
+	$detector{"description"} = "The outercap with the tube added";
+	$detector{"pos"}         = "0*mm 0*mm 0*mm";
+	$detector{"rotation"}    = "-90*deg 0*deg 0*deg";
+	$detector{"color"}       = "3399993";
+	$detector{"type"}        = "Operation: shell + outsideProngs";
+	$detector{"dimensions"}  = "0";
+	$detector{"material"}    = "Component";
+	$detector{"visible"}     = 0;
+	$detector{"style"}       = 1;
+	print_det(\%configuration, \%detector);
+
+	
+	%detector = init_det();
+	$detector{"name"}        = "shellWithCraterAndProngs";
+	$detector{"mother"}      = "biggestFrame";
+	$detector{"description"} = "The outercap with tube and with the crater removed";
+	$detector{"pos"}         = "0*mm 0*mm 36*mm";
+	$detector{"rotation"}    = "-90*deg 0*deg 0*deg";
+	$detector{"color"}       = "3399993";
+	$detector{"type"}        = "Operation: shellWithProngs - emptyCone";
+	$detector{"dimensions"}  = "0";
+	$detector{"material"}    = "G4_KAPTON";
+	$detector{"visible"}     = 1;
+	$detector{"style"}       = 1;
+	print_det(\%configuration, \%detector);
+
+
+
+
+}
+
+sub build_finalTubeExtension
+{
+	my %detector = init_det();
+	$detector{"name"}        = "finalTubeExtension";
+	$detector{"mother"}      = "finalTube";
+	$detector{"description"} = "The cover of the final tube";
+	$detector{"pos"}         = "0*mm 0*mm -104.09025*mm";
+ 	$detector{"rotation"}    = "0*deg 0*deg 0*deg";
+	$detector{"color"}       = "FFCCFF3";
+	$detector{"type"}        = "Tube";
+	$detector{"dimensions"}  = "48.34255*mm 50.80165*mm 40*mm 270*deg 360*deg";
+	$detector{"material"}    = "G4_KAPTON";
+	$detector{"visible"}     = 1;
+	$detector{"style"}       = 1;
+	print_det(\%configuration, \%detector);
+}
+
+
+sub build_endPipingTop1
+{
+	my %detector = init_det();
+	$detector{"name"}        = "finalPiping1";
+	$detector{"mother"}      = "biggestFrame";
+	$detector{"description"} = "The tube that extends from the first vertical tube at the top ";
+	$detector{"pos"}         = "0*mm 28.116*mm -152*mm";
+ 	$detector{"rotation"}    = "0*deg 0*deg 0*deg";
+	$detector{"color"}       = "0080FF";
+	$detector{"type"}        = "Tube";
+	$detector{"dimensions"}  = "3.875*mm 3.876*mm 80*mm 270*deg 360*deg";
+	$detector{"material"}    = "StainlessSteel";
+	$detector{"visible"}     = 1;
+	$detector{"style"}       = 1;
+	print_det(\%configuration, \%detector);
+}
+
+sub build_endPipingBottom1
+{
+	my %detector = init_det();
+	$detector{"name"}        = "finalPiping11";
+	$detector{"mother"}      = "biggestFrame";
+	$detector{"description"} = "The tube that ends from the first lower vertical tube at the top ";
+	$detector{"pos"}         = "0*mm 16.3*mm -158.5*mm";
+ 	$detector{"rotation"}    = "0*deg 0*deg 0*deg";
+	$detector{"color"}       = "0080FF3";
+	$detector{"type"}        = "Tube";
+	$detector{"dimensions"}  = "3.875*mm 3.876*mm 75*mm 270*deg 360*deg";
+	$detector{"material"}    = "StainlessSteel";
+	$detector{"visible"}     = 1;
+	$detector{"style"}       = 1;
+	print_det(\%configuration, \%detector);
+}
+
+sub build_endPipingTop2
+{
+	my %detector = init_det();
+	$detector{"name"}        = "finalPiping2";
+	$detector{"mother"}      = "biggestFrame";
+	$detector{"description"} = "The tube that extends from the second vertical tube at the top ";
+	$detector{"pos"}         = "-23.0*mm -15.5*mm -152.5*mm";
+ 	$detector{"rotation"}    = "0*deg 0*deg 0*deg";
+	$detector{"color"}       = "0080FF3";
+	$detector{"type"}        = "Tube";
+	$detector{"dimensions"}  = "3.875*mm 3.876*mm 80*mm 270*deg 360*deg";
+	$detector{"material"}    = "StainlessSteel";
+	$detector{"visible"}     = 1;
+	$detector{"style"}       = 1;
+	print_det(\%configuration, \%detector);
+}
+
+
+sub build_endPipingBottom2
+{
+	my %detector = init_det();
+	$detector{"name"}        = "finalPiping22";
+	$detector{"mother"}      = "biggestFrame";
+	$detector{"description"} = "The tube that extends from the second lower vertical tube at the top";
+	$detector{"pos"}         = "-13*mm -10*mm -159*mm";
+ 	$detector{"rotation"}    = "0*deg 0*deg 0*deg";
+	$detector{"color"}       = "0080FF3";
+	$detector{"type"}        = "Tube";
+	$detector{"dimensions"}  = "3.875*mm 3.876*mm 75*mm 270*deg 360*deg";
+	$detector{"material"}    = "StainlessSteel";
+	$detector{"visible"}     = 1;
+	$detector{"style"}       = 1;
+	print_det(\%configuration, \%detector);
+}
+
+sub build_endPipingTop3
+{
+	my %detector = init_det();
+	$detector{"name"}        = "finalPiping3";
+	$detector{"mother"}      = "biggestFrame";
+	$detector{"description"} = "The tube that extends from the third vertical tube at the top ";
+	$detector{"pos"}         = "23.0*mm -15.5*mm -152.5*mm";
+ 	$detector{"rotation"}    = "0*deg 0*deg 0*deg";
+	$detector{"color"}       = "0080FF3";
+	$detector{"type"}        = "Tube";
+	$detector{"dimensions"}  = "3.875*mm 3.876*mm 80*mm 270*deg 360*deg" ;
+	$detector{"material"}    = "StainlessSteel";
+	$detector{"visible"}     = 1;
+	$detector{"style"}       = 1;
+	print_det(\%configuration, \%detector);
+}
+
+sub build_endPipingBottom3
+{
+	my %detector = init_det();
+	$detector{"name"}        = "finalPiping33";
+	$detector{"mother"}      = "biggestFrame";
+	$detector{"description"} = "The tube that extends from the third lower vertical tube at the top ";
+	$detector{"pos"}         = "13*mm -10*mm -159*mm";
+ 	$detector{"rotation"}    = "0*deg 0*deg 0*deg";
+	$detector{"color"}       = "0080FF3";
+	$detector{"type"}        = "Tube";
+	$detector{"dimensions"}  = "3.875*mm 3.876*mm 75*mm 270*deg 360*deg" ;
+	$detector{"material"}    = "StainlessSteel";
+	$detector{"visible"}     = 1;
+	$detector{"style"}       = 1;
+	print_det(\%configuration, \%detector);
+}
+
+
+
+
+
+build_totalFrame();
+
+build_cork();
+build_innerCork(); 
+build_innerCorkCase();
+build_kaptonLayer();
+build_kaptonCone();
+build_foamLayer1(); 
+build_LD2Storage();
+build_LD2Cap(); 
+build_LD2StorageCover();
+build_LD2CapCover(); 
+build_LD2CapTopCover();
+build_centralPipeline();
+build_firstOuterPipe(); 
+build_secondOuterPipe();
+build_thirdOuterPipe();
+build_ccThirdOuterPipe();
+build_cThirdOuterPipe();
+build_tThirdOuterPipe();
+build_corkWindow(); 
+build_centralPipelineWindow();
+build_kaptonConeWindow();
+build_airCylinderVerticalTop1();
+build_pipeToLD2Top1();
+build_kaptonCoverForFoam();
+build_airCylinderVerticalBottom1();
+build_pipeToLD2Bottom1();
+
+
+build_foamLayer2();
+build_airCylinderVerticalTop2();
+build_pipeToLD2Top2();
+build_airCylinderVerticalBottom2();
+build_pipeToLD2Bottom2();
+
+
+build_foamLayer3();
+build_airCylinderVerticalTop3();
+build_pipeToLD2Top3();
+build_airCylinderVerticalBottom3();
+build_pipeToLD2Bottom3();
+
+build_finalTube();
+build_finalTubeExtension();
+build_endPipingTop1();
+build_endPipingTop2();
+build_endPipingTop3();
+
+build_endPipingBottom1();
+build_endPipingBottom2();
+build_endPipingBottom3();
+
+
+
+build_topCap();
