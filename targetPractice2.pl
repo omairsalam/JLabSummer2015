@@ -542,7 +542,7 @@ sub build_tThirdOuterPipe #9.4
 #The following pipes will be providing liquid hydrogen and duterium to the storage tanks mentioned above
 
 
-
+#This is the first vertical pipe that lies in a vertical plane and is connected to an outside supply of liquid duterium
 sub build_airCylinderVerticalTop1
 {
 	my %detector = init_det();
