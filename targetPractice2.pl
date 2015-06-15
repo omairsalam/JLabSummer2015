@@ -56,6 +56,7 @@ our %configuration = load_configuration($ARGV[0]);
 #One more number can be added to the end of this 6 digit number and this defines the opacity of the color, with 0 being the most opaque and 6 being the least opaque 
 
 
+#There is a frame which acts like a mother volume for all the geometries made below. Therefore this frame allows us to move the target in different directions and also to rotate it however we like
 sub build_totalFrame 
 {
 	my %detector = init_det();
@@ -99,7 +100,7 @@ sub build_innerCorkCase #1.2
 	$detector{"name"}        = "innerCorkCase";
 	$detector{"mother"}      = "biggestFrame";
 	$detector{"description"} = "The container for the liquid hydrogen";
-	$detector{"pos"}         = "0*mm 0*mm 26.0193*mm";
+	$detector{"pos"}         = "0*mm 0*mm 27.0193*mm";
  	$detector{"rotation"}    = "0*deg 0*deg 0*deg";
 	$detector{"color"}       = "C875333";
 	$detector{"type"}        = "Cons";
@@ -376,7 +377,7 @@ sub build_foamLayer3 #3.1
 #---------------------------------------------------------------------------------------------------------------------------------
 
 #This is a kapton casing for the foam as well as the cork (the structure containing the liquid hydrogen (see above) ) 
-sub build_kaptonCoverForFoam #3.1
+sub build_kaptonCoverForFoamAndDuterium #3.1
 {
 	my %detector = init_det();
 	$detector{"name"}        = "kaptonCover";
@@ -392,6 +393,25 @@ sub build_kaptonCoverForFoam #3.1
 	$detector{"style"}       = 1;
 	print_det(\%configuration, \%detector);
 }
+
+#This is another casing for the foam only 
+sub build_carbonCoverForFoam #3.1
+{
+	my %detector = init_det();
+	$detector{"name"}        = "cabonCoverForFoam";
+	$detector{"mother"}      = "biggestFrame";
+	$detector{"description"} = "A carbon cone that covers the foam";
+	$detector{"pos"}         = "0*mm 0*mm -0.7*mm";
+ 	$detector{"rotation"}    = "180*deg 0*deg 0*deg";
+	$detector{"color"}       = "170E0E3";
+	$detector{"type"}        = "Cons";
+	$detector{"dimensions"}  = "5.838*mm 6.138*mm 12.69566*mm 12.99566*mm 23.7707*mm 270*deg 360*deg";
+	$detector{"material"}    = "G4_C";
+	$detector{"visible"}     = 1;
+	$detector{"style"}       = 1;
+	print_det(\%configuration, \%detector);
+}
+
 
 #--------------------------------------------------------------------------------------------------------
 
@@ -1091,7 +1111,8 @@ build_centralPipelineWindow();
 build_kaptonConeWindow();
 build_airCylinderVerticalTop1();
 build_pipeToLD2Top1();
-build_kaptonCoverForFoam();
+build_kaptonCoverForFoamAndDuterium();
+build_carbonCoverForFoam();
 build_airCylinderVerticalBottom1();
 build_pipeToLD2Bottom1();
 
