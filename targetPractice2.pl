@@ -27,11 +27,11 @@ if( scalar @ARGV != 1)
 #Configuration file contains name of the shape, its version, the format in which the shape will be output, and the ranges of the geometry of the shape. 
 our %configuration = load_configuration($ARGV[0]);
 
-#-------------------------------------------------------------------
+#---------------------------------------------------------------------------
 #For all shapes please refer to a the labelled diagram in the package which associates the methods with their respective shapes. 
 #For example, build_cork below will be labelled as 1.1 in the diagram in the package, and its shape will roughly be like the shape drawn two methods down 
 #Similarly, innercork will be labelled as 1.2 in the diagram. 
-#-------------------------------------------------------------------- 
+#--------------------------------------------------------------------------
 
 #General Remarks ----------------------------------------------------------------------------------
 # All the windows are made of Aluminium, with a thicknes of 15 micro-inch
