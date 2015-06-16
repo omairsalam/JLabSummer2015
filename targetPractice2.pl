@@ -94,7 +94,7 @@ sub build_innerCork #1.2
 }
 
 #This is the Aluminium casing for the liquid hydrogen
-sub build_innerCorkCase #1.2
+sub build_innerCorkCase #1.21
 {
 	my %detector = init_det();
 	$detector{"name"}        = "innerCorkCase";
@@ -296,10 +296,10 @@ sub build_LD2CapCover #5.2
 
 
 #There is an opening in the center of the ld2Cap which is covered by making a very thin aluminium window
-sub build_LD2CapTopCover #5.3 
+sub build_LD2CapWindow #5.3 
 {
 	my %detector = init_det();
-	$detector{"name"}        = "ld2TopCapCover";
+	$detector{"name"}        = "ld2CapWindow";
 	$detector{"mother"}      = "biggestFrame";
 	$detector{"description"} = "The lid of the front cone of the LD2 Storage ";
 	$detector{"pos"}         = "0*mm 0*mm 15.65495*mm";
@@ -395,7 +395,7 @@ sub build_kaptonCoverForFoamAndDuterium #3.1
 }
 
 #This is another casing for the foam only 
-sub build_carbonCoverForFoam #3.1
+sub build_carbonCoverForFoam #3.2
 {
 	my %detector = init_det();
 	$detector{"name"}        = "cabonCoverForFoam";
@@ -586,7 +586,7 @@ sub build_tThirdOuterPipe #9.4
 
 
 #This is the first vertical pipe that lies in a vertical plane and is connected to an outside supply of liquid duterium
-sub build_airCylinderVerticalTop1
+sub build_airCylinderVerticalTop1 #10.1
 {
 	my %detector = init_det();
 	$detector{"name"}        = "airCylinderVerticalTop1";
@@ -605,7 +605,7 @@ sub build_airCylinderVerticalTop1
 
 
 #This pipe connects the first vertical pipe to the kapton layer 
-sub build_pipeToLD2Top1
+sub build_pipeToLD2Top1 #10.2
 {
 	my %detector = init_det();
 	$detector{"name"}        = "pipeToLD2Top1";
@@ -623,7 +623,7 @@ sub build_pipeToLD2Top1
 }
 
 #This is a copy of the first vertical pipe but is slightly smaller and is situation slightly below the first vertical pipe 
-sub build_airCylinderVerticalBottom1
+sub build_airCylinderVerticalBottom1 #10.3
 {
 	my %detector = init_det();
 	$detector{"name"}        = "airCylinderVerticalBottom1";
@@ -641,7 +641,7 @@ sub build_airCylinderVerticalBottom1
 }
 
 #This pipe connects the pipe above to the liquid duterium cone
-sub build_pipeToLD2Bottom1
+sub build_pipeToLD2Bottom1 #10.4
 {
 	my %detector = init_det();
 	$detector{"name"}        = "pipeToLD2Bottom1";
@@ -825,7 +825,7 @@ sub build_pipeToLD2Bottom3
 
 
 #This is the largest cylinder that encloses everything 
-sub build_finalTube
+sub build_finalTube #11.1
 {
 	my %detector = init_det();
 	$detector{"name"}        = "finalTube";
@@ -844,7 +844,7 @@ sub build_finalTube
 
 
 #This is the cap of the largest cylinder and is made of multiple shapes as will be shown below
-sub build_topCap
+sub build_topCap #11.2
 {
         #We make a cone that we will subtract from the volume to get a cone like crater 
 	my %detector = init_det();
@@ -929,7 +929,7 @@ sub build_topCap
 }
 
 #This is the window of front of the final tube i.e. the window to cover the top of the crater made by removing a cone from the cylinder above ( please see above) 
-sub build_finalTubeWindow
+sub build_finalTubeWindow #11.3
 {
 	my %detector = init_det();
 	$detector{"name"}        = "finalTubeWindow";
@@ -947,7 +947,7 @@ sub build_finalTubeWindow
 }
 
 #This is the back extension of the tube and has been added beause there is another material that extends behind this large tube
-sub build_finalTubeExtension
+sub build_finalTubeExtension #11.4
 {
 	my %detector = init_det();
 	$detector{"name"}        = "finalTubeExtension";
@@ -970,7 +970,7 @@ sub build_finalTubeExtension
 #This also means that these three sets of pipes are also separated by 111 degrees 
 
 #This pipe extends from airCylinderVerticalTop1 horizontally and extends to the left 
-sub build_endPipingTop1
+sub build_endPipingTop1 #12.1
 {
 	my %detector = init_det();
 	$detector{"name"}        = "finalPiping1";
@@ -988,7 +988,7 @@ sub build_endPipingTop1
 }
 
 #This pipe extends from airCylinderBottom1 horizontally and extends to the left 
-sub build_endPipingBottom1
+sub build_endPipingBottom1 #12.2
 {
 	my %detector = init_det();
 	$detector{"name"}        = "finalPiping11";
@@ -1098,7 +1098,7 @@ build_LD2Storage();
 build_LD2Cap(); 
 build_LD2StorageCover();
 build_LD2CapCover(); 
-build_LD2CapTopCover();
+build_LD2CapWindow();
 build_centralPipeline();
 build_firstOuterPipe(); 
 build_secondOuterPipe();
