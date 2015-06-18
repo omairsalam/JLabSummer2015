@@ -1,6 +1,6 @@
 #!/usr/bin/perl -w
 
-#my name is Omair Alam
+#my name is Omair Shahzad Alam and I am testing different systems
 # loading GEMC geometry routines
 use strict;
 use lib ("$ENV{GEMC}/io");
