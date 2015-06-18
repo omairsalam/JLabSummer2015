@@ -387,7 +387,7 @@ sub build_kaptonCoverForFoamAndDuterium #3.1
  	$detector{"rotation"}    = "180*deg 0*deg 0*deg";
 	$detector{"color"}       = "B266FF3";
 	$detector{"type"}        = "Cons";
-	$detector{"dimensions"}  = "5.4669*mm 5.838*mm 12.69565*mm 12.69566*mm 27.0538mm 270*deg 360*deg";
+	$detector{"dimensions"}  = "5.4669*mm 5.838*mm 12.69565*mm 12.69566*mm 27.0538*mm 270*deg 360*deg";
 	$detector{"material"}    = "G4_C";
 	$detector{"visible"}     = 1;
 	$detector{"style"}       = 1;
@@ -902,7 +902,7 @@ sub build_topCap #11.2
 	$detector{"rotation"}    = "-90*deg 0*deg 0*deg";
 	$detector{"color"}       = "3399993";
 	$detector{"type"}        = "Operation: shell + outsideProngs";
-	$detector{"dimensions"}  = "0";
+	$detector{"dimensions"}  = "0*mm";
 	$detector{"material"}    = "Component";
 	$detector{"visible"}     = 0;
 	$detector{"style"}       = 1;
@@ -917,7 +917,7 @@ sub build_topCap #11.2
 	$detector{"rotation"}    = "-90*deg 0*deg 0*deg";
 	$detector{"color"}       = "3399993";
 	$detector{"type"}        = "Operation: shellWithProngs - emptyCone";
-	$detector{"dimensions"}  = "0";
+	$detector{"dimensions"}  = "0*mm";
 	$detector{"material"}    = "G4_KAPTON";
 	$detector{"visible"}     = 1;
 	$detector{"style"}       = 1;
@@ -1109,12 +1109,16 @@ build_tThirdOuterPipe();
 build_corkWindow(); 
 build_centralPipelineWindow();
 build_kaptonConeWindow();
+
+
 build_airCylinderVerticalTop1();
 build_pipeToLD2Top1();
 build_kaptonCoverForFoamAndDuterium();
 build_carbonCoverForFoam();
 build_airCylinderVerticalBottom1();
 build_pipeToLD2Bottom1();
+
+
 
 
 build_foamLayer2();
