@@ -33,6 +33,8 @@ H2D hdpRecPhiGen = (H2D) dirFile.getDirectory("electrons").getObject("hdpRecPhiG
 H2D hdPhiRecPgen = (H2D) dirFile.getDirectory("electrons").getObject("hdPhiRecPgen");
 H2D hdPhiRecThetaGen = (H2D) dirFile.getDirectory("electrons").getObject("hdPhiRecThetaGen");
 H2D hdPhiRecPhiGen = (H2D) dirFile.getDirectory("electrons").getObject("hdPhiRecPhiGen");
+H2D hdpRecPrec = (H2D)dirFile.getDirectory("electrons").getObject("hdpRecPrec");
+H1D hvz = (H1D) dirFile.getDirectory("electrons").getObject("hvz");
 
 
 // make first canvas. ********************************************
@@ -81,6 +83,11 @@ hdpRecPhiGen.setXTitle("phiGen (deg)");
 hdpRecPhiGen.setYTitle("dp (GeV/c)");
 c2.draw(hdpRecPhiGen);
 
+c2.cd(3);
+hdpRecPrec.setXTitle("pRec (GeV/c)");
+hdpRecPrec.setYTitle("dp (GeV/c)");
+c2.draw(hdpRecPrec);
+
 
 // make third canvas. ********************************************
 TCanvas c3 = new TCanvas("c3", "Physics Analysis 3", 800, 640, 2, 2);
@@ -100,6 +107,14 @@ c3.cd(2);
 hdPhiRecPhiGen.setXTitle("phiGen (deg)");
 hdPhiRecPhiGen.setYTitle("dPhiRec (deg)");
 c3.draw(hdPhiRecPhiGen);
+
+hvz.setLineWidth(2);
+hvz.setLineColor(2);
+c3.cd(3);
+hvz.setXTitle("vz (mm)");
+c3.draw(hvz);
+
+
 
 
 // make fourth canvas. *******************************************
