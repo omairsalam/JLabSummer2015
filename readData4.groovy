@@ -81,7 +81,7 @@ histFile.getDirectory("electrons").add(new H2D("hdPhiRecPgen", 110,0,11, 45,-15,
 histFile.getDirectory("electrons").add(new H2D("hdPhiRecThetaGen", 100,0,45, 45,-15,0));
 histFile.getDirectory("electrons").add(new H2D("hdPhiRecPhiGen", 180,-180,180, 45,-15,0));
 histFile.getDirectory("electrons").add(new H2D("hdpRecPrec", 110,0,11, 100,-0.05,0.05));
-histFile.getDirectory("electrons").add(new H1D("hvz", 180, -0.01, 0.01));
+histFile.getDirectory("electrons").add(new H1D("hvz", 180, -1, 1));
 
 // Define the same hists locally.  *************************************
 
@@ -190,7 +190,7 @@ while(reader.hasEvent()){
 	    hdPhiRecThetaGen.fill(thetaGen,phiDiff);
 	    hdPhiRecPhiGen.fill(phiGen,phiDiff);
 	    hdpRecPrec.fill(recPTotal,presol);
-	    hvz.fill(genElectron.vertex().z());
+	    hvz.fill(recElectron.vertex().z());
 
         } // end for loop over tracks
     } // end if to check on electrons in the event.

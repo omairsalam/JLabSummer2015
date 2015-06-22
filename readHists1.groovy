@@ -111,7 +111,7 @@ c3.draw(hdPhiRecPhiGen);
 hvz.setLineWidth(2);
 hvz.setLineColor(2);
 c3.cd(3);
-hvz.setXTitle("vz (mm)");
+hvz.setXTitle("vz (cm)");
 c3.draw(hvz);
 
 
