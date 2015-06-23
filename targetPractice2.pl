@@ -1,6 +1,6 @@
 #!/usr/bin/perl -w
 
-#my name is Omair Shahzad Alam and I am testing different systems and this is really cool
+#aamy name is Omair Shahzad Alam and I am testing different systems and this is really cool
 # loading GEMC geometry routines
 use strict;
 use lib ("$ENV{GEMC}/io");
@@ -850,7 +850,7 @@ sub build_topCap #11.2
         #We make a cone that we will subtract from the volume to get a cone like crater 
 	my %detector = init_det();
 	$detector{"name"}        = "emptyCone";
-	$detector{"mother"}      = "shell";
+	$detector{"mother"}      = "biggestFrame";
 	$detector{"description"} = "The cone shaped crater made inside the shell";
 	$detector{"pos"}         = "0*mm 50.96835*mm 0*mm";
 	$detector{"rotation"}    = "-270*deg 0*deg 0*deg";
@@ -866,7 +866,7 @@ sub build_topCap #11.2
 	#We make a cylindrical volume which acts like a nozel to the cap 
 	%detector = init_det();
 	$detector{"name"}        = "outsideProngs";
-	$detector{"mother"}      = "shell";
+	$detector{"mother"}      = "biggestFrame";
 	$detector{"description"} = "The cylinder that is going to extend from the shell";#"43.6533*mm 50.0033*mm 0*deg 180*deg 0*deg 180*deg"
 	$detector{"pos"}         = "0*mm 50.96835*mm 0*mm";
 	$detector{"rotation"}    = "-90*deg 0*deg 0*deg";
@@ -881,7 +881,7 @@ sub build_topCap #11.2
 	#We make a hemisphere that is the bulk of the cap 
 	%detector = init_det();
 	$detector{"name"}        = "shell";
-	$detector{"mother"}      = "finalTube";
+	$detector{"mother"}      = "biggestFrame";
 	$detector{"description"} = "The shell which acts like the cap for the cylinder";#"43.6533*mm 50.0033*mm 0*deg 180*deg 0*deg 180*deg"
 	$detector{"pos"}         = "0*mm 0*mm 0*mm";
 	$detector{"rotation"}    = "-90*deg 0*deg 0*deg";
@@ -897,7 +897,7 @@ sub build_topCap #11.2
 	#We add the cylinder to the top of the sphere to make a hemisphere with a tube like extension
 	%detector = init_det();
 	$detector{"name"}        = "shellWithProngs";
-	$detector{"mother"}      = "finalTube";
+	$detector{"mother"}      = "biggestFrame";
 	$detector{"description"} = "The outercap with the tube added";
 	$detector{"pos"}         = "0*mm 0*mm 0*mm";
 	$detector{"rotation"}    = "-90*deg 0*deg 0*deg";
@@ -934,7 +934,7 @@ sub build_finalTubeWindow #11.3
 {
 	my %detector = init_det();
 	$detector{"name"}        = "finalTubeWindow";
-	$detector{"mother"}      = "root";
+	$detector{"mother"}      = "biggestFrame";
 	$detector{"description"} = "The window of the final tube";
 	$detector{"pos"}         = "0*mm 0*mm 94.96835*mm";
  	$detector{"rotation"}    = "0*deg 0*deg 0*deg";
@@ -952,9 +952,9 @@ sub build_finalTubeExtension #11.4
 {
 	my %detector = init_det();
 	$detector{"name"}        = "finalTubeExtension";
-	$detector{"mother"}      = "finalTube";
+	$detector{"mother"}      = "biggestFrame";
 	$detector{"description"} = "The extension behind the final tube";
-	$detector{"pos"}         = "0*mm 0*mm -104.09025*mm";
+	$detector{"pos"}         = "0*mm 0*mm -132*mm";
  	$detector{"rotation"}    = "0*deg 0*deg 0*deg";
 	$detector{"color"}       = "FFCCFF3";
 	$detector{"type"}        = "Tube";

@@ -35,6 +35,7 @@ H2D hdPhiRecThetaGen = (H2D) dirFile.getDirectory("electrons").getObject("hdPhiR
 H2D hdPhiRecPhiGen = (H2D) dirFile.getDirectory("electrons").getObject("hdPhiRecPhiGen");
 H2D hdpRecPrec = (H2D)dirFile.getDirectory("electrons").getObject("hdpRecPrec");
 H1D hvz = (H1D) dirFile.getDirectory("electrons").getObject("hvz");
+H1D hdpTheta = (H1D) dirFile.getDirectory("electrons").getObject("hdpTheta");
 
 
 // make first canvas. ********************************************
@@ -135,6 +136,10 @@ c4.cd(2);
 hdThetaRecPhiGen.setXTitle("phiGen (deg)");
 hdThetaRecPhiGen.setYTitle("dThetaRec (deg)");
 c4.draw(hdThetaRecPhiGen);
+
+c4.cd(3);
+hdpTheta.setXTitle("hdpTheta (deg)");
+c4.draw(hdpTheta);
 
 
 
