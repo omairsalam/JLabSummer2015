@@ -64,7 +64,7 @@ sub build_totalFrame
 	$detector{"name"}        = "biggestFrame";
 	$detector{"mother"}      = "root";
 	$detector{"description"} = "In order to move the picture";
-	$detector{"pos"}         = "0*mm 0*mm 0*mm";
+	$detector{"pos"}         = "0*mm 0*mm -2.05837*cm";
  	$detector{"rotation"}    = "0*deg 0*deg 0*deg";
 	$detector{"color"}       = "C875337";
 	$detector{"type"}        = "Box";
