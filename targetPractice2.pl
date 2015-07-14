@@ -85,7 +85,7 @@ sub build_innerCork #1.2
 	$detector{"description"} = "The liquid hydrogen";
 	$detector{"pos"}         = "0*mm 0*mm 27.0193*mm";
  	$detector{"rotation"}    = "0*deg 0*deg 0*deg";
-	$detector{"color"}       = "C875333";
+	$detector{"color"}       = "C87533";
 	$detector{"type"}        = "Cons";
 	$detector{"dimensions"}  = "0*mm 2.2509*mm 0*mm 5.49125*mm 0.98535*mm 270*deg 360*deg";
 	$detector{"material"}    = "G4_lH2";

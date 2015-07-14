@@ -36,6 +36,7 @@ H2D hdPhiRecPhiGen = (H2D) dirFile.getDirectory("electrons").getObject("hdPhiRec
 H2D hdpRecPrec = (H2D)dirFile.getDirectory("electrons").getObject("hdpRecPrec");
 H1D hvz = (H1D) dirFile.getDirectory("electrons").getObject("hvz");
 H1D hdpTheta = (H1D) dirFile.getDirectory("electrons").getObject("hdpTheta");
+H1D hdpPhi = (H1D) dirFile.getDirectory("electrons").getObject("hdpPhi");
 
 
 // make first canvas. ********************************************
@@ -141,6 +142,14 @@ c4.cd(3);
 hdpTheta.setXTitle("hdpTheta (deg)");
 c4.draw(hdpTheta);
 
+
+
+// make fifth canvas. *******************************************
+TCanvas c5 = new TCanvas("c5", "Physics Analysis 5", 800, 640, 2, 2);
+
+c5.cd(0);
+hdpPhi.setXTitle("hdpPhi (deg)");
+c5.draw(hdpPhi);
 
 
 
