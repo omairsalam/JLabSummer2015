@@ -103,7 +103,7 @@ sub build_innerCorkCase #1.21
 	$detector{"description"} = "The container for the liquid hydrogen";
 	$detector{"pos"}         = "0*mm 0*mm 27.0193*mm";
  	$detector{"rotation"}    = "0*deg 0*deg 0*deg";
-	$detector{"color"}       = "C875334";
+	$detector{"color"}       = "C875333";
 	$detector{"type"}        = "Cons";
 	$detector{"dimensions"}  = "1.8135*mm 2.2509*mm 5.05385*mm 5.49125*mm 0.98535*mm 270*deg 360*deg";
 	$detector{"material"}    = "G4_Al";
@@ -122,7 +122,7 @@ sub build_cork #1.1
 	$detector{"description"} = "The structure that supports the liquid hydrogen";
 	$detector{"pos"}         = "0*mm 0*mm 25.53395*mm";
  	$detector{"rotation"}    = "180*deg 0*deg 0*deg";
-	$detector{"color"}       = "54C3E84";
+	$detector{"color"}       = "C875333";
 	$detector{"type"}        = "Cons";
 	$detector{"dimensions"}  = "5.23735*mm 5.49125*mm 5.5841*mm 5.838*mm 2.48275*mm 270*deg 360*deg";
 	$detector{"material"}    = "G4_Al";
@@ -174,7 +174,7 @@ sub build_kaptonLayer #2.1
 	$detector{"description"} = "The outermost cone that encapsulates the cork and the liquid duterium constructs";
 	$detector{"pos"}         = "0*mm 0*mm 0*mm";
  	$detector{"rotation"}    = "180*deg 0*deg 0*deg";
-	$detector{"color"}       = "OEEDCF4";
+	$detector{"color"}       = "99CC003";
 	$detector{"type"}        = "Cons";
 	$detector{"dimensions"}  = "7.9911*mm 7.9912*mm 17.90044*mm 17.90045*mm 39.28*mm 270*deg 360*deg";
 	$detector{"material"}    = "G4_KAPTON";
@@ -192,7 +192,7 @@ sub build_kaptonCone #2.2
 	$detector{"description"} = "the cap of the outermost cone";
 	$detector{"pos"}         = "0*mm 0*mm 41.11685*mm";
  	$detector{"rotation"}    = "180*deg 0*deg 0*deg";
-	$detector{"color"}       = "OEEDCF4";
+	$detector{"color"}       = "99CC003";
 	$detector{"type"}        = "Cons";
 	$detector{"dimensions"}  = "1.9982*mm 1.9983*mm 7.99124*mm 7.99125*mm 1.83685*mm 270*deg 360*deg";
 	$detector{"material"}    = "G4_KAPTON";
@@ -211,11 +211,11 @@ sub build_kaptonConeWindow #2.3
 	$detector{"description"} = "The window for the kapton cone ";
 	$detector{"pos"}         = "0*mm 0*mm 42.9537*mm";
 	$detector{"rotation"}    = "0*deg 0*deg 0*deg";
-	$detector{"color"}       = "FF00004";
+	$detector{"color"}       = "FF00003";
 	$detector{"type"}        = "Tube";
 	$detector{"dimensions"}  = "0.0001*mm 1.9982*mm 0.000381*mm 270*deg 360*deg";
 	$detector{"material"}    = "G4_Al";
-	$detector{"visible"}     = 0;
+	$detector{"visible"}     = 1;
 	$detector{"style"}       = 1;
 	print_det(\%configuration, \%detector);
 }
@@ -247,11 +247,11 @@ sub build_LD2StorageCover #4.2
 	$detector{"name"}        = "ld2StorageCover";
 	$detector{"mother"}      = "biggestFrame";
 	$detector{"description"} = "the outer casing for the whole LD2 Storage cone";
-	$detector{"pos"}         = "0*mm 0*mm -16.396*mm";
+	$detector{"pos"}         = "0*mm 0*mm -6.396*mm";
  	$detector{"rotation"}    = "180*deg 0*deg 0*deg";
-	$detector{"color"}       = "0FE61E";
+	$detector{"color"}       = "0FE61E3";
 	$detector{"type"}        = "Cons";
-	$detector{"dimensions"}  = "7.4151*mm 7.4162*mm 5.000*mm 10.1119*mm 10.3958*mm 270*deg 360*deg";
+	$detector{"dimensions"}  = "4.4151*mm 4.4162*mm 5.000*mm 10.1119*mm 20.3958*mm 270*deg 360*deg";
 	$detector{"material"}    = "G4_KAPTON";
 	$detector{"visible"}     = 1;
 	$detector{"style"}       = 1;
@@ -290,7 +290,7 @@ sub build_LD2CapCover #5.2
 	$detector{"type"}        = "Cons";
 	$detector{"dimensions"}  = "4.4161*mm 4.4162*mm 1.9*mm 2*mm 0.85495*mm 270*deg 360*deg";
 	$detector{"material"}    = "G4_KAPTON";
-	$detector{"visible"}     = 0;
+	$detector{"visible"}     = 1;
 	$detector{"style"}       = 1;
 	print_det(\%configuration, \%detector);
 }
@@ -390,7 +390,7 @@ sub build_kaptonCoverForFoamAndDuterium #3.1
 	$detector{"type"}        = "Cons";
 	$detector{"dimensions"}  = "5.4669*mm 5.838*mm 12.69565*mm 12.69566*mm 27.0538*mm 270*deg 360*deg";
 	$detector{"material"}    = "G4_C";
-	$detector{"visible"}     = 0;
+	$detector{"visible"}     = 1;
 	$detector{"style"}       = 1;
 	print_det(\%configuration, \%detector);
 }
@@ -408,7 +408,7 @@ sub build_carbonCoverForFoam #3.2
 	$detector{"type"}        = "Cons";
 	$detector{"dimensions"}  = "5.838*mm 6.138*mm 12.69566*mm 12.99566*mm 23.7707*mm 270*deg 360*deg";
 	$detector{"material"}    = "G4_C";
-	$detector{"visible"}     = 0;
+	$detector{"visible"}     = 1;
 	$detector{"style"}       = 1;
 	print_det(\%configuration, \%detector);
 }
@@ -427,7 +427,7 @@ sub build_centralPipeline #6.1
 	$detector{"description"} = "The main pipeline going into the LD2 Storage Cone";
 	$detector{"pos"}         = "0*mm 0*mm -48.6557*mm";
  	$detector{"rotation"}    = "0*deg 0*deg 0*deg";
-	$detector{"color"}       = "7D1676";
+	$detector{"color"}       = "CCCC003";
 	$detector{"type"}        = "Tube";
 	$detector{"dimensions"}  = "2*mm 5*mm 43.2062*mm 270*deg 360*deg";
 	$detector{"material"}    = "G4_Cu";
@@ -464,7 +464,7 @@ sub build_firstOuterPipe #7.1
 	$detector{"description"} = "The pipeline touching the ld2 storage as well as the foam layer";
 	$detector{"pos"}         = "0*mm 0*mm -49.1913*mm";
  	$detector{"rotation"}    = "180*deg 0*deg 0*deg";
-	$detector{"color"}       = "FA44073";
+	$detector{"color"}       = "0FE61E3";
 	$detector{"type"}        = "Tube";
 	$detector{"dimensions"}  = "5*mm 14.2672*mm 23.13425*mm 270*deg 360*deg";
 	$detector{"material"}    = "G4_Cu";
@@ -858,7 +858,7 @@ sub build_topCap #11.2
 	$detector{"type"}        = "Cons";
 	$detector{"dimensions"}  = "0*cm 3.7059*mm 0*cm 4.49185*mm 8.91505*mm 270*deg 360*deg"; #0.001*mm 3.7059*mm 0.001*mm 4.49185*mm 40.3500*mm 270*deg 360*deg#0*cm 5.7059*cm 0*cm 0.49185*cm 400.3500*mm 270*deg 360*deg
 	$detector{"material"}    = "Component";
-	$detector{"visible"}     = 1;
+	$detector{"visible"}     = 0;
 	$detector{"style"}       = 1;
 	print_det(\%configuration, \%detector);
 
@@ -874,7 +874,7 @@ sub build_topCap #11.2
 	$detector{"type"}        = "Tube";
 	$detector{"dimensions"}  = "0*mm 9.52455*mm 8.31505*mm 0*deg 360*deg";#"2*cm 2*cm 8*cm
 	$detector{"material"}    = "Component";
-	$detector{"visible"}     = 1;
+	$detector{"visible"}     = 0;
 	$detector{"style"}       = 1;
 	print_det(\%configuration, \%detector);
 
@@ -889,7 +889,7 @@ sub build_topCap #11.2
 	$detector{"type"}        = "Sphere";
 	$detector{"dimensions"}  = "43.6533*mm 50.0033*mm 0*deg 180*deg 0*deg 180*deg";#"2*cm 2*cm 8*cm
 	$detector{"material"}    = "Component";
-	$detector{"visible"}     = 1;
+	$detector{"visible"}     = 0;
 	$detector{"style"}       = 1;
 	print_det(\%configuration, \%detector);
 
@@ -905,7 +905,7 @@ sub build_topCap #11.2
 	$detector{"type"}        = "Operation: shell + outsideProngs";
 	$detector{"dimensions"}  = "0*mm";
 	$detector{"material"}    = "Component";
-	$detector{"visible"}     = 1;
+	$detector{"visible"}     = 0;
 	$detector{"style"}       = 1;
 	print_det(\%configuration, \%detector);
 
@@ -1092,35 +1092,60 @@ build_totalFrame();
 build_cork();
 build_innerCork(); 
 build_innerCorkCase();
-
+build_kaptonLayer();
+build_kaptonCone();
 build_foamLayer1(); 
 build_LD2Storage();
 build_LD2Cap(); 
 build_LD2StorageCover();
 build_LD2CapCover(); 
 build_LD2CapWindow();
-
+build_centralPipeline();
 build_firstOuterPipe(); 
-
+build_secondOuterPipe();
+build_thirdOuterPipe();
+build_ccThirdOuterPipe();
+build_cThirdOuterPipe();
+build_tThirdOuterPipe();
 build_corkWindow(); 
-build_kaptonLayer();
-build_kaptonCone();
+build_centralPipelineWindow();
 build_kaptonConeWindow();
 
 
+build_airCylinderVerticalTop1();
+build_pipeToLD2Top1();
 build_kaptonCoverForFoamAndDuterium();
 build_carbonCoverForFoam();
-
-
+build_airCylinderVerticalBottom1();
+build_pipeToLD2Bottom1();
 
 
 
 
 build_foamLayer2();
-
+build_airCylinderVerticalTop2();
+build_pipeToLD2Top2();
+build_airCylinderVerticalBottom2();
+build_pipeToLD2Bottom2();
 
 
 build_foamLayer3();
+build_airCylinderVerticalTop3();
+build_pipeToLD2Top3();
+build_airCylinderVerticalBottom3();
+build_pipeToLD2Bottom3();
+
+build_finalTube();
+build_finalTubeExtension();
+build_finalTubeWindow();
+build_endPipingTop1();
+build_endPipingTop2();
+build_endPipingTop3();
+
+build_endPipingBottom1();
+build_endPipingBottom2();
+build_endPipingBottom3();
 
 
 
+build_topCap();

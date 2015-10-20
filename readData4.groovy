@@ -82,8 +82,8 @@ histFile.getDirectory("electrons").add(new H2D("hdPhiRecThetaGen", 100,0,45, 45,
 histFile.getDirectory("electrons").add(new H2D("hdPhiRecPhiGen", 180,-180,180, 45,-15,0));
 histFile.getDirectory("electrons").add(new H2D("hdpRecPrec", 110,0,11, 100,-0.05,0.05));
 histFile.getDirectory("electrons").add(new H1D("hvz", 180, -0.5, 2.5));
-histFile.getDirectory("electrons").add(new H1D("hdpTheta", 180, -0.1, 0.1));
-histFile.getDirectory("electrons").add(new H1D("hdpPhi", 180, -1, 1));
+histFile.getDirectory("electrons").add(new H1D("hdpTheta", 180, -0.04, 0.04));
+histFile.getDirectory("electrons").add(new H1D("hdpPhi", 180, -0.5, 0.5));
 
 // Define the same hists locally.  *************************************
 
