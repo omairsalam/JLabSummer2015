@@ -11,6 +11,6 @@ The work being done in the Software Collaboration
   </ol>
 </p>
 <figure>
-  <img src="targetDiagram.png" style="width:25px;height:25px;">
+  <img src="targetDiagram.png" align="middle" style="width:25px;height:25px">
   <figcaption>Fig1. - Labelled target schematic.</figcaption>
 </figure>
