@@ -1,9 +1,9 @@
 <gcard>
-	<detector name="/opt/jlab_software/1.2/Linux_CentOS6.6-x86_64-gcc4.4.7/gemc/2.2/source/experiments/clas12/fc/forwardCarriage" factory="TEXT" variation="original"/>
-	<detector name="/opt/jlab_software/1.2/Linux_CentOS6.6-x86_64-gcc4.4.7/gemc/2.2/source/experiments/clas12/ftof/ftof" factory="TEXT" variation="original"/>
-	<detector name="/opt/jlab_software/1.2/Linux_CentOS6.6-x86_64-gcc4.4.7/gemc/2.2/source/experiments/clas12/dc/dc" factory="TEXT" variation="original"/>
-	<detector name="/opt/jlab_software/1.2/Linux_CentOS6.6-x86_64-gcc4.4.7/gemc/2.2/source/experiments/clas12/ec/ec" factory="TEXT" variation="original"/>
-	<detector name="/opt/jlab_software/1.2/Linux_CentOS6.6-x86_64-gcc4.4.7/gemc/2.2/source/experiments/clas12/pcal/pcal" factory="TEXT" variation="original"/>
+	<detector name="/opt/jlab_software/devel/Linux_CentOS7.3.1611-x86_64-gcc4.8.5/gemc/devel/experiments/clas12/fc/forwardCarriage" factory="TEXT" variation="original"/>
+	<detector name="/opt/jlab_software/devel/Linux_CentOS7.3.1611-x86_64-gcc4.8.5/gemc/devel/experiments/clas12/ftof/ftof" factory="TEXT" variation="original"/>
+	<detector name="/opt/jlab_software/devel/Linux_CentOS7.3.1611-x86_64-gcc4.8.5/gemc/devel/experiments/clas12/dc/dc" factory="TEXT" variation="original"/>
+	<detector name="/opt/jlab_software/devel/Linux_CentOS7.3.1611-x86_64-gcc4.8.5/gemc/devel/experiments/clas12/ec/ec" factory="TEXT" variation="original"/>
+	<detector name="/opt/jlab_software/devel/Linux_CentOS7.3.1611-x86_64-gcc4.8.5/gemc/devel/experiments/clas12/pcal/pcal" factory="TEXT" variation="original"/>
 	<detector name="example" factory="TEXT" variation="mine"/>
 
 	<option name="geometry" value="600x600"/>
