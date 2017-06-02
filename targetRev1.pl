@@ -465,7 +465,7 @@ sub build_foamLayer1 #3.1
 	$detector{"color"}       = "FFFF003";
 	$detector{"type"}        = "Cons";
 	$detector{"dimensions"}  = "3.5422*mm 5.838*mm 10.16675*mm 12.69565*mm 24.57105*mm 214.49*deg 111.02*deg";
-	$detector{"material"}    = "Rohacell31";
+	$detector{"material"}    = "rohacell";
 	$detector{"visible"}     = 1;
 	$detector{"style"}       = 1;
 	print_det(\%configuration, \%detector);
@@ -482,7 +482,7 @@ sub build_foamLayer2 #3.1
 	$detector{"color"}       = "FFFF003";
 	$detector{"type"}        = "Cons";
 	$detector{"dimensions"}  = "3.5422*mm 5.838*mm 10.16675*mm 12.69565*mm 24.57105*mm 334.4855*deg 111.02*deg";
-	$detector{"material"}    = "Rohacell31";
+	$detector{"material"}    = "rohacell";
 	$detector{"visible"}     = 1;
 	$detector{"style"}       = 1;
 	print_det(\%configuration, \%detector);
@@ -500,7 +500,7 @@ sub build_foamLayer3 #3.1
 	$detector{"color"}       = "FFFF003";
 	$detector{"type"}        = "Cons";
 	$detector{"dimensions"}  = "3.5422*mm 5.838*mm 10.16675*mm 12.69565*mm 24.57105*mm 454.481*deg 111.02*deg";
-	$detector{"material"}    = "Rohacell31";
+	$detector{"material"}    = "rohacell";
 	$detector{"visible"}     = 1;
 	$detector{"style"}       = 1;
 	print_det(\%configuration, \%detector);
@@ -1091,7 +1091,7 @@ sub build_endPipingTop1 #12.1
 	$detector{"color"}       = "0080FF";
 	$detector{"type"}        = "Tube";
 	$detector{"dimensions"}  = "3.875*mm 3.876*mm 80*mm 270*deg 360*deg";
-	$detector{"material"}    = "StainlessSteel";
+	$detector{"material"}    = "G4_STAINLESS-STEEL";
 	$detector{"visible"}     = 1;
 	$detector{"style"}       = 1;
 	print_det(\%configuration, \%detector);
@@ -1109,7 +1109,7 @@ sub build_endPipingBottom1 #12.2
 	$detector{"color"}       = "0080FF3";
 	$detector{"type"}        = "Tube";
 	$detector{"dimensions"}  = "3.875*mm 3.876*mm 75*mm 270*deg 360*deg";
-	$detector{"material"}    = "StainlessSteel";
+	$detector{"material"}    = "G4_STAINLESS-STEEL";
 	$detector{"visible"}     = 1;
 	$detector{"style"}       = 1;
 	print_det(\%configuration, \%detector);
@@ -1127,7 +1127,7 @@ sub build_endPipingTop2
 	$detector{"color"}       = "0080FF3";
 	$detector{"type"}        = "Tube";
 	$detector{"dimensions"}  = "3.875*mm 3.876*mm 80*mm 270*deg 360*deg";
-	$detector{"material"}    = "StainlessSteel";
+	$detector{"material"}    = "G4_STAINLESS-STEEL";
 	$detector{"visible"}     = 1;
 	$detector{"style"}       = 1;
 	print_det(\%configuration, \%detector);
@@ -1145,7 +1145,7 @@ sub build_endPipingBottom2
 	$detector{"color"}       = "0080FF3";
 	$detector{"type"}        = "Tube";
 	$detector{"dimensions"}  = "3.875*mm 3.876*mm 75*mm 270*deg 360*deg";
-	$detector{"material"}    = "StainlessSteel";
+	$detector{"material"}    = "G4_STAINLESS-STEEL";
 	$detector{"visible"}     = 1;
 	$detector{"style"}       = 1;
 	print_det(\%configuration, \%detector);
@@ -1163,7 +1163,7 @@ sub build_endPipingTop3
 	$detector{"color"}       = "0080FF3";
 	$detector{"type"}        = "Tube";
 	$detector{"dimensions"}  = "3.875*mm 3.876*mm 80*mm 270*deg 360*deg" ;
-	$detector{"material"}    = "StainlessSteel";
+	$detector{"material"}    = "G4_STAINLESS-STEEL";
 	$detector{"visible"}     = 1;
 	$detector{"style"}       = 1;
 	print_det(\%configuration, \%detector);
@@ -1180,7 +1180,7 @@ sub build_endPipingBottom3
 	$detector{"color"}       = "0080FF3";
 	$detector{"type"}        = "Tube";
 	$detector{"dimensions"}  = "3.875*mm 3.876*mm 75*mm 270*deg 360*deg" ;
-	$detector{"material"}    = "StainlessSteel";
+	$detector{"material"}    = "G4_STAINLESS-STEEL";
 	$detector{"visible"}     = 1;
 	$detector{"style"}       = 1;
 	print_det(\%configuration, \%detector);

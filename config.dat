@@ -12,7 +12,7 @@ rmin:       1
 rmax:       10000
 
 # Comments/Description
-comment:       This is the first implementation of the FTOF
+comment:       This is the elaborate definition of the target
 
 # Verbosity controls the perl script output
 verbosity: 0
